@@ -1,0 +1,25 @@
+<?page title="Auto Generated index.zul"?>
+<zk>
+    <tree id="tree" apply="vn.tcx.zkoss.tree.composer.DTComposer">
+        <treecols sizable="true">
+            <treecol label="TT" />
+            <treecol label="Chỉ tiêu" />
+            <treecol label="Đvt" />
+            <treecol label="KH 2013" />
+            <treecol label="TH 7 tháng năm 2012" />
+            <treecol label="TH 6 tháng năm 2013" />
+            <treecol label="Ước TH tháng 7 năm 2013" />
+            <treecol label="Ước TH 7 tháng năm 2013" />
+            <treecol label="Cùng kỳ" />
+            <treecol label="Kế hoạch" />
+        </treecols>
+
+        <template name="model">
+            <treeitem>
+                <treerow>
+                    <treecell  forEach="${ each.data.cells }"> <label width="100%" value="${ each.value }"/></treecell>
+                </treerow>
+            </treeitem>
+        </template>
+    </tree>
+</zk>
