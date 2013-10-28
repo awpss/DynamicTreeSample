@@ -18,7 +18,7 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
 
     @Override
     public void render(Treeitem item, DTNode data, int index) throws Exception {
-        
+
         Treerow row = new Treerow();
         row.setAttribute(DTKeys.ROW_DATA, data);
         Treecell[] cells = new DTNonEditable().createComponents(data);
@@ -32,11 +32,15 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
             cells[i].setContext((Menupopup) new DTMenuPopup(item, row, cells[i]).getMenu());
             row.appendChild(cells[i]);
         }
-       
         item.appendChild(row);
         row.setDroppable("true");
         row.setDraggable("true");
         row.addEventListener(Events.ON_DROP, new DropRowListener(item));
+
+        if (!item.isOpen()) {
+        	item.setOpen(true);
+        	item.setOpen(false);
+        }
 
     }
 

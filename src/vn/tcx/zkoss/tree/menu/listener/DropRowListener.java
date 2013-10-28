@@ -8,11 +8,11 @@ import org.zkoss.zul.Treeitem;
 public class DropRowListener implements EventListener<DropEvent> {
 
     private Treeitem treeItem;
-    
+
     public DropRowListener(Treeitem treeItem) {
         this.treeItem = treeItem;
     }
-    
+
     @Override
     public void onEvent(DropEvent event) throws Exception {
         Component dragged = event.getDragged();

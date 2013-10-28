@@ -1,63 +1,110 @@
 package vn.tcx.zkoss.tree.composer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.DefaultTreeModel;
 import org.zkoss.zul.Tree;
+import org.zkoss.zul.Treecol;
+import org.zkoss.zul.Treecols;
 
 import vn.tcx.zkoss.tree.constant.DTKeys;
 import vn.tcx.zkoss.tree.model.DTCell;
+import vn.tcx.zkoss.tree.model.DTColumn;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTNodeCollection;
 import vn.tcx.zkoss.tree.model.DTRow;
 import vn.tcx.zkoss.tree.render.DTItemRender;
 
 public class DTComposer extends GenericForwardComposer<Component> {
-    
+
     private Tree tree;
-    
+
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         // TODO Auto-generated method stub
         super.doAfterCompose(comp);
+
+        tree.appendChild(getColumns(COLUMNS));
         tree.setModel(getTreeModel());
         tree.setItemRenderer(new DTItemRender());
-        tree.setZclass("z-vfiletree");
+        tree.setMold("paging");
+        tree.setPageSize(10);
+        tree.setRows(10);
+
     }
-    
-    
+
     private DefaultTreeModel<DTRow> getTreeModel() {
         return new DefaultTreeModel<DTRow>(getRoot());
     }
-    
+
     public DTNode getRoot() {
+    	return parseDataToRow(DATA);
+    }
+
+    private Treecols getColumns(List<DTColumn> cols) {
+    	Treecols treeCols = new Treecols();
+    	treeCols.setSizable(true);
+    	for (DTColumn c : cols) {
+    		Treecol col = new Treecol(c.getValue());
+    		treeCols.appendChild(col);
+    	}
+
+    	return treeCols;
+    }
+
+    private DTNode parseDataToRow(final List<String[]> data) {
         DTNode root = new DTNode(null, new DTNodeCollection(){{
-            DTRow row = new DTRow();
-            for (int i = 0; i < 10; i++) {
-                row.addCell(new DTCell("Cell " + (i + 1)));
-            }
-            add(new DTNode(row, new DTNodeCollection() {{
-                DTRow row = new DTRow();
-                row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_EDITABLE);
-                for (int i = 0; i < 10; i++) {
-                    row.addCell(new DTCell("Cell " + (i + 1)));
-                }
-                add(new DTNode(row, new DTNodeCollection() {{
-                    DTRow row = new DTRow();
-                    for (int i = 0; i < 10; i++) {
-                        row.addCell(new DTCell("Cell " + (i + 1)));
+        	for (int i = 0; i < data.size(); i++) {
+        		if (data.get(i)[1].isEmpty()) {
+        			DTRow row = new DTRow();
+                    row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_NONEDITABLE);
+                    row.addCell(new DTCell("" + (i + 1)));
+                    for (int j = 2; j < data.get(i).length; j++) {
+                    	row.addCell(new DTCell(data.get(i)[j]));
                     }
                     add(new DTNode(row));
-                    add(new DTNode(row));
-                }}));
-                add(new DTNode(row));
-                add(new DTNode(row));
-            }}));
-            add(new DTNode(row));
-            add(new DTNode(row));
-            add(new DTNode(row));
+        		}
+        	}
         }});
+
         return root;
+    }
+
+    private final static List<String[]> DATA;
+    private final static List<DTColumn> COLUMNS;
+
+    static {
+    	DATA = new ArrayList<String[]>();
+    	DATA.add(new String[] {"1", "", "Dân số trung bình", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"2", "", "Lao động đang làm việc  trong các ngành KTQD", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"3", "", "Tổng sản phẩm trên địa bàn (Giá so sánh 1994)", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"4", "", "Tổng thu ngân sách trên địa bàn", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"5", "", "Tổng chi NS địa phương", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"6", "", "Giá trị sx nông nghiệp (Giá cố định 1994)", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"7", "", "Sản lượng lương thực có hạt", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"8", "", "Giá trị sản xuất công nghiệp (Giá cố định 1994)", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"17", "8", "Trong đó: - Lúa", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"9", "", "Tổng mức bán lẻ hàng hoá xã hội", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"10", "", "Kim ngạch xuất khẩu", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"11", "", "Kim ngạch nhập khẩu", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"12", "", "Khối lượng hàng hoá luân chuyển", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"13", "", "Khối lượng hành khách luân chuyển", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"14", "", "Học sinh phổ thông", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"15", "", "Số giường bệnh", "100,62", "100,90", "100,90", "100,57", "100,97"});
+    	DATA.add(new String[] {"16", "", "Y, bác sĩ", "100,62", "100,90", "100,90", "100,57", "100,97"});
+
+    	COLUMNS = new ArrayList<DTColumn>();
+    	COLUMNS.add(new DTColumn("TT"));
+    	COLUMNS.add(new DTColumn("Chỉ tiêu Kinh tế - Xã hội"));
+    	COLUMNS.add(new DTColumn("2011"));
+    	COLUMNS.add(new DTColumn("2012"));
+    	COLUMNS.add(new DTColumn("2013"));
+    	COLUMNS.add(new DTColumn("2014"));
+    	COLUMNS.add(new DTColumn("2015"));
+
     }
 
 }
