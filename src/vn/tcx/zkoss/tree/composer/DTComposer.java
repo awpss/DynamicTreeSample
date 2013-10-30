@@ -11,6 +11,7 @@ import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treecol;
 import org.zkoss.zul.Treecols;
 
+import vn.tcx.zkoss.tree.constant.DTColumnKeys;
 import vn.tcx.zkoss.tree.constant.DTKeys;
 import vn.tcx.zkoss.tree.model.DTColumn;
 import vn.tcx.zkoss.tree.model.DTNode;
@@ -66,6 +67,7 @@ public class DTComposer extends GenericForwardComposer<Component> {
 
     	for (DTColumn c : cols) {
     		Treecol col = new Treecol(c.getValue());
+    		col.setWidth(c.getProperty(DTColumnKeys.WIDTH.toString()).toString());
     		treeCols.appendChild(col);
     	}
 
@@ -76,6 +78,14 @@ public class DTComposer extends GenericForwardComposer<Component> {
         DTNode root = new DTNode(null, new DTNodeCollection(){{
         	for (int i = 0; i < data.size(); i++) {
         		if (data.get(i)[1].isEmpty()) {
+        			// sort by parentId
+
+        			// group by parentId
+
+        			// create nodes, if node has parentId is empty, it's root.
+        			// if node's id matching with id of a group, set parent for all child of group is the node
+        			// and remove the group.
+        			// while until all node created and don't exists any group.
         			DTRow row = DTItemUtil.generateDTRow(data.get(i), tree, i);
                     add(new DTNode(row, null, false));
         		}
@@ -120,14 +130,18 @@ public class DTComposer extends GenericForwardComposer<Component> {
     	DATA.add(new String[] {"16", "", "Y, bác sĩ", "100,62", "100,90", "100,90", "100,57", "100,97"});
 
     	COLUMNS = new ArrayList<DTColumn>();
-    	COLUMNS.add(new DTColumn());
-    	COLUMNS.add(new DTColumn("TT"));
-    	COLUMNS.add(new DTColumn("Chỉ tiêu Kinh tế - Xã hội"));
-    	COLUMNS.add(new DTColumn("2011"));
-    	COLUMNS.add(new DTColumn("2012"));
-    	COLUMNS.add(new DTColumn("2013"));
-    	COLUMNS.add(new DTColumn("2014"));
-    	COLUMNS.add(new DTColumn("2015"));
+
+    	DTColumn col1 = new DTColumn();
+    	col1.setProperty(DTColumnKeys.WIDTH.toString(), "80px");
+
+    	COLUMNS.add(col1);
+    	COLUMNS.add(new DTColumn("TT") {{ setProperty(DTColumnKeys.WIDTH.toString(), "40px"); }});
+    	COLUMNS.add(new DTColumn("Chỉ tiêu Kinh tế - Xã hội") {{ setProperty(DTColumnKeys.WIDTH.toString(), "400px"); }});
+    	COLUMNS.add(new DTColumn("2011") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});
+    	COLUMNS.add(new DTColumn("2012") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});
+    	COLUMNS.add(new DTColumn("2013") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});
+    	COLUMNS.add(new DTColumn("2014") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});
+    	COLUMNS.add(new DTColumn("2015") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});
 
     }
 

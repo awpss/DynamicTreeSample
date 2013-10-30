@@ -10,6 +10,7 @@ import org.zkoss.zul.Treerow;
 import vn.tcx.zkoss.tree.constant.DTKeys;
 import vn.tcx.zkoss.tree.menu.listener.DropRowListener;
 import vn.tcx.zkoss.tree.model.DTCell;
+import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
 
 public class DTItemUtil {
@@ -67,6 +68,10 @@ public class DTItemUtil {
     		data[i] = "";
     	}
     	return data;
+	}
+
+	public static DTRow getDTRowInTreeitem(Treeitem item) {
+		return ((DTNode) item.getValue()).getData();
 	}
 
 }

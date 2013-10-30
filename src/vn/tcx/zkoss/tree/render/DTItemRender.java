@@ -1,6 +1,5 @@
 package vn.tcx.zkoss.tree.render;
 
-import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Menupopup;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
@@ -9,8 +8,6 @@ import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.constant.DTKeys;
 import vn.tcx.zkoss.tree.menu.DTMenuPopup;
-import vn.tcx.zkoss.tree.menu.listener.ModifyMouseEventListener;
-import vn.tcx.zkoss.tree.menu.listener.SaveKeyEventListener;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.template.DTEditable;
 import vn.tcx.zkoss.tree.template.DTNonEditable;
@@ -23,13 +20,13 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
         Treerow row = new Treerow();
         item.setValue(data);
 
-        Treecell[] cells = new DTNonEditable().createComponents(data);
+        Treecell[] cells = new DTNonEditable().createComponents(item, data);
 
         if (item.getTree().getAttribute(DTKeys.ATTR_TREE_EDITABLE) != null
     			&& item.getTree().getAttribute(DTKeys.ATTR_TREE_EDITABLE).equals(true)) {
         	if (data.getData().getProperty(DTKeys.ROW_TEMPLATE) != null) {
                 if (data.getData().getProperty(DTKeys.ROW_TEMPLATE).equals(DTKeys.ROW_EDITABLE)) {
-                    cells = new DTEditable().createComponents(data);
+                    cells = new DTEditable().createComponents(item, data);
                 }
             }
         }
@@ -39,8 +36,8 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
         			&& item.getTree().getAttribute(DTKeys.ATTR_TREE_EDITABLE).equals(true)) {
         		// Set context menu cho tung cell.
         		cells[i].setContext((Menupopup) new DTMenuPopup(item, row, cells[i]).getBaseMenu());
-            	item.addEventListener(Events.ON_DOUBLE_CLICK, new ModifyMouseEventListener(item, row, cells[i]));
-            	item.addEventListener(Events.ON_OK, new SaveKeyEventListener(item, row, cells[i]));
+//            	item.addEventListener(Events.ON_DOUBLE_CLICK, new ModifyMouseEventListener(item, row, cells[i]));
+//            	item.addEventListener(Events.ON_OK, new UpdateEventListener(item, row, cells[i]));
         	}
             row.appendChild(cells[i]);
         }

@@ -11,11 +11,15 @@ import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
+import vn.tcx.zkoss.tree.constant.DTKeys;
 import vn.tcx.zkoss.tree.constant.DTListenerKeys;
 import vn.tcx.zkoss.tree.menu.listener.CreateChildEventListener;
 import vn.tcx.zkoss.tree.menu.listener.CreateEventListener;
 import vn.tcx.zkoss.tree.menu.listener.ModifyEventListener;
 import vn.tcx.zkoss.tree.menu.listener.RemoveEventListener;
+import vn.tcx.zkoss.tree.menu.listener.UpdateEventListener;
+import vn.tcx.zkoss.tree.model.DTNode;
+import vn.tcx.zkoss.tree.model.DTRow;
 
 public class DTMenuPopup extends Menupopup {
 
@@ -40,6 +44,17 @@ public class DTMenuPopup extends Menupopup {
 
 
     public void createBaseMenu() {
+
+
+    	System.out.println(((DTNode) treeItem.getValue()).getData().getProperty(DTKeys.ROW_TEMPLATE));
+    	if (((DTNode) treeItem.getValue()).getData().getProperty(DTKeys.ROW_TEMPLATE) != null) {
+        	if (((DTNode) treeItem.getValue()).getData().getProperty(DTKeys.ROW_TEMPLATE).equals(DTKeys.ROW_EDITABLE)) {
+            	Map<DTListenerKeys, EventListener<Event>> updateListener = new HashMap<DTListenerKeys, EventListener<Event>>();
+            	updateListener.put(DTListenerKeys.ON_CLICK, new UpdateEventListener(treeItem, treeRow, treeCell));
+            	Menuitem update = DTMenuItemUtil.createMenuItem("Cập nhập dữ liệu", updateListener);
+            	addMenuItem(update);
+        	}
+    	}
 
     	Map<DTListenerKeys, EventListener<Event>> createListener = new HashMap<DTListenerKeys, EventListener<Event>>();
     	createListener.put(DTListenerKeys.ON_CLICK, new CreateEventListener(treeItem, treeRow, treeCell));

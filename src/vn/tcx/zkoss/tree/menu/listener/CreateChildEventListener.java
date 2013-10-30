@@ -40,33 +40,7 @@ public class CreateChildEventListener implements EventListener<Event> {
 		row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_EDITABLE);
         DTNode newNode = new DTNode(row, null);
         selectedTreeNode.getChildren().add(newNode);
-
-    }
-
-    private Treeitem createTreeItem() {
-
-    	Treeitem item = new Treeitem();
-    	item.setPage(treeItem.getPage());
-        Treerow row = new Treerow();
-        DTNode data = (DTNode) treeRow.getAttribute(DTKeys.ROW_DATA);
-        for (int i = 0; i < data.getData().getCells().size(); i++) {
-        	data.getData().getCell(i).setValue("");
-        }
-        row.setAttribute(DTKeys.ROW_DATA, data);
-        Treecell[] cells = new DTEditable().createComponents(data);
-
-        for (int i = 0; i < cells.length; i++) {
-        	cells[i].setContext((Menupopup) new DTMenuPopup(item, row, cells[i]).getBaseMenu());
-        	row.appendChild(cells[i]);
-        }
-
-        item.appendChild(row);
-        item.setCheckable(true);
-
-        DTItemUtil.setDragDrop(item, row);
-        DTItemUtil.setPrepareForFirstShow(item);
-
-        return item;
+        treeItem.setOpen(true);
 
     }
 
