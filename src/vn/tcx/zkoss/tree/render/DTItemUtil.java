@@ -1,7 +1,9 @@
 package vn.tcx.zkoss.tree.render;
 
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Tree;
+import org.zkoss.zul.Treecols;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
@@ -45,10 +47,26 @@ public class DTItemUtil {
             	DTCell cell = new DTCell(data[j]);
             	cell.setProperty(DTKeys.PROP_ROW_ID, data[0]);
             	cell.setProperty(DTKeys.PROP_ROW_PARENT_ID, data[1]);
+            	cell.setProperty(DTKeys.PROP_CELL_WIDTH, "100%");
             	row.addCell(cell);
             }
             return row;
 		}
 		return null;
 	}
+
+	public static String[] createEmptyDataBaseOnColumns(Tree tree) {
+		String[] data = new String[2];
+    	for (Component c : tree.getChildren()) {
+    		if (c instanceof Treecols) {
+    			data = new String[c.getChildren().size()];
+    		}
+    	}
+
+    	for (int i = 0; i < data.length; i++) {
+    		data[i] = "";
+    	}
+    	return data;
+	}
+
 }

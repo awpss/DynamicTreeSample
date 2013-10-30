@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.DefaultTreeModel;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treecol;
@@ -21,6 +22,7 @@ import vn.tcx.zkoss.tree.render.DTItemUtil;
 public class DTComposer extends GenericForwardComposer<Component> {
 
     private Tree tree;
+    private Button btnDisable;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
@@ -28,9 +30,14 @@ public class DTComposer extends GenericForwardComposer<Component> {
         super.doAfterCompose(comp);
         tree.setAttribute(DTKeys.ATTR_TREE_CHECKABLE, true);
         tree.appendChild(getColumns(COLUMNS));
+        setEditable(true);
+
+        if (tree.getAttribute(DTKeys.ATTR_TREE_EDITABLE) != null
+    			&& tree.getAttribute(DTKeys.ATTR_TREE_EDITABLE).equals(true)) {
+            tree.setCheckmark(true);
+            tree.setMultiple(true);
+        }
         tree.setModel(getTreeModel());
-        tree.setCheckmark(true);
-        tree.setMultiple(true);
         tree.setItemRenderer(new DTItemRender());
         tree.setMold("paging");
         tree.setPageSize(10);
@@ -77,6 +84,17 @@ public class DTComposer extends GenericForwardComposer<Component> {
 
         return root;
     }
+
+
+    public void onClick$btnDisable() {
+    	setEditable(false);
+    	tree.setModel(tree.getModel());
+    }
+
+    public void onClick$btnGetSelected() {
+
+    }
+
 
     private final static List<String[]> DATA;
     private final static List<DTColumn> COLUMNS;

@@ -32,22 +32,11 @@ public class CreateEventListener implements EventListener<Event> {
 
     public void onEvent(Event event) throws Exception {
     	DTNode selectedTreeNode = treeItem.getValue();
-    	String[] data = new String[2];
-    	// make empty data based on columns
-    	for (Component c : treeItem.getTree().getChildren()) {
-    		if (c instanceof Treecols) {
-    			data = new String[c.getChildren().size()];
-    		}
-    	}
-
-    	for (int i = 0; i < data.length; i++) {
-    		data[i] = "";
-    	}
-
+    	String[] data = DTItemUtil.createEmptyDataBaseOnColumns(treeItem.getTree());
     	DTRow row = DTItemUtil.generateDTRow(data, treeItem.getTree(), treeItem.getIndex());
 		row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_EDITABLE);
 
-        DTNode newNode = new DTNode(row);
+        DTNode newNode = new DTNode(row, null);
         if (selectedTreeNode.getParent() == null) {
             selectedTreeNode.getModel().getRoot().insert(newNode, treeItem.getIndex());
         } else {

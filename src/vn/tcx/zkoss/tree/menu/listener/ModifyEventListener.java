@@ -1,25 +1,29 @@
 package vn.tcx.zkoss.tree.menu.listener;
 
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zul.Menupopup;
 import org.zkoss.zul.Treecell;
+import org.zkoss.zul.Treecols;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.constant.DTKeys;
 import vn.tcx.zkoss.tree.menu.DTMenuPopup;
 import vn.tcx.zkoss.tree.model.DTNode;
+import vn.tcx.zkoss.tree.model.DTRow;
 import vn.tcx.zkoss.tree.render.DTItemUtil;
 import vn.tcx.zkoss.tree.template.DTEditable;
 
-public class UpdateEventListener implements EventListener<Event> {
+public class ModifyEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
     private Treerow treeRow;
     private Treecell treeCell;
 
-    public UpdateEventListener(Treeitem treeItem, Treerow treeRow,
+    public ModifyEventListener(Treeitem treeItem, Treerow treeRow,
             Treecell treeCell) {
         this.treeItem = treeItem;
         this.treeRow = treeRow;
@@ -27,20 +31,10 @@ public class UpdateEventListener implements EventListener<Event> {
     }
 
     public void onEvent(Event event) throws Exception {
-    	updateTreeItem();
-    }
-
-    private void updateTreeItem() {
-
-        DTNode data = treeItem.getValue();
-        treeRow.setAttribute(DTKeys.ROW_DATA, data);
-        Treecell[] cells = new DTEditable().createComponents(data);
-        treeRow.getChildren().clear();
-        for (int i = 0; i < cells.length; i++) {
-        	cells[i].setContext((Menupopup) new DTMenuPopup(treeItem, treeRow, cells[i]).getMenu());
-        	treeRow.appendChild(cells[i]);
-        }
-
+    	DTNode selectedTreeNode = treeItem.getValue();
+    	DTRow row = selectedTreeNode.getData();
+		row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_EDITABLE);
+		selectedTreeNode.setData(row);
     }
 
 }

@@ -1,6 +1,8 @@
 <?page title="Dynamic Tree Sample"?>
 <zk>
-    <tree id="tree" apply="vn.tcx.zkoss.tree.composer.DTComposer">
-
-    </tree>
+	<window apply="vn.tcx.zkoss.tree.composer.DTDemoComposer, org.zkoss.zk.ui.select.SelectorComposer">
+		<tree id="tree"/>
+	    <button id="btnDisable" label="Disable" />
+	    <button id="btnGetSelected" label="Get Selected" />
+	</window>
 </zk>
