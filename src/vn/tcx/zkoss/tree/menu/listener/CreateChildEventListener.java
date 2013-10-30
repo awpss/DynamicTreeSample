@@ -3,9 +3,10 @@ package vn.tcx.zkoss.tree.menu.listener;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zul.Columns;
+import org.zkoss.zul.DefaultTreeModel;
 import org.zkoss.zul.Menupopup;
 import org.zkoss.zul.Treecell;
+import org.zkoss.zul.Treechildren;
 import org.zkoss.zul.Treecols;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
@@ -13,17 +14,18 @@ import org.zkoss.zul.Treerow;
 import vn.tcx.zkoss.tree.constant.DTKeys;
 import vn.tcx.zkoss.tree.menu.DTMenuPopup;
 import vn.tcx.zkoss.tree.model.DTNode;
+import vn.tcx.zkoss.tree.model.DTNodeCollection;
 import vn.tcx.zkoss.tree.model.DTRow;
 import vn.tcx.zkoss.tree.render.DTItemUtil;
 import vn.tcx.zkoss.tree.template.DTEditable;
 
-public class CreateEventListener implements EventListener<Event> {
+public class CreateChildEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
     private Treerow treeRow;
     private Treecell treeCell;
 
-    public CreateEventListener(Treeitem treeItem, Treerow treeRow,
+    public CreateChildEventListener(Treeitem treeItem, Treerow treeRow,
             Treecell treeCell) {
         this.treeItem = treeItem;
         this.treeRow = treeRow;
@@ -46,15 +48,36 @@ public class CreateEventListener implements EventListener<Event> {
 
     	DTRow row = DTItemUtil.generateDTRow(data, treeItem.getTree(), treeItem.getIndex());
 		row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_EDITABLE);
-
         DTNode newNode = new DTNode(row);
-        if (selectedTreeNode.getParent() == null) {
-            selectedTreeNode.getModel().getRoot().insert(newNode, treeItem.getIndex());
-        } else {
-        	selectedTreeNode.getParent().insert(newNode, treeItem.getIndex());
+        selectedTreeNode.getChildren().add(newNode);
+
+    }
+
+    private Treeitem createTreeItem() {
+
+    	Treeitem item = new Treeitem();
+    	item.setPage(treeItem.getPage());
+        Treerow row = new Treerow();
+        DTNode data = (DTNode) treeRow.getAttribute(DTKeys.ROW_DATA);
+        for (int i = 0; i < data.getData().getCells().size(); i++) {
+        	data.getData().getCell(i).setValue("");
+        }
+        row.setAttribute(DTKeys.ROW_DATA, data);
+        Treecell[] cells = new DTEditable().createComponents(data);
+
+        for (int i = 0; i < cells.length; i++) {
+        	cells[i].setContext((Menupopup) new DTMenuPopup(item, row, cells[i]).getMenu());
+        	row.appendChild(cells[i]);
         }
 
-        // Update stt
+        item.appendChild(row);
+        item.setCheckable(true);
+
+        DTItemUtil.setDragDrop(item, row);
+        DTItemUtil.setPrepareForFirstShow(item);
+
+        return item;
+
     }
 
 }

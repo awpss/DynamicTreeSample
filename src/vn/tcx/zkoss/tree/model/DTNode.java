@@ -14,11 +14,11 @@ public class DTNode extends DefaultTreeNode<DTRow> {
     public DTNode(DTRow data) {
         super(data);
     }
-    
+
     public DTNode(DTRow data, DTNodeCollection childrens) {
         super(data, childrens);
     }
-    
+
     public DTNode(DTRow data, DTNodeCollection childrens, boolean open) {
         super(data, childrens);
         this.open = open;
@@ -46,9 +46,14 @@ public class DTNode extends DefaultTreeNode<DTRow> {
         }
         properties.put(key, value);
     }
-    
+
     public Object getProperty(String key) {
         if (properties == null) return null;
         return properties.get(key);
     }
+
+    public boolean isLeaf() {
+    	return super.isLeaf();
+    }
+
 }

@@ -11,12 +11,12 @@ import org.zkoss.zul.Treecol;
 import org.zkoss.zul.Treecols;
 
 import vn.tcx.zkoss.tree.constant.DTKeys;
-import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTColumn;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTNodeCollection;
 import vn.tcx.zkoss.tree.model.DTRow;
 import vn.tcx.zkoss.tree.render.DTItemRender;
+import vn.tcx.zkoss.tree.render.DTItemUtil;
 
 public class DTComposer extends GenericForwardComposer<Component> {
 
@@ -26,14 +26,23 @@ public class DTComposer extends GenericForwardComposer<Component> {
     public void doAfterCompose(Component comp) throws Exception {
         // TODO Auto-generated method stub
         super.doAfterCompose(comp);
-
+        tree.setAttribute(DTKeys.ATTR_TREE_CHECKABLE, true);
         tree.appendChild(getColumns(COLUMNS));
         tree.setModel(getTreeModel());
+        tree.setCheckmark(true);
+        tree.setMultiple(true);
         tree.setItemRenderer(new DTItemRender());
         tree.setMold("paging");
         tree.setPageSize(10);
         tree.setRows(10);
+    }
 
+    public void setEditable(boolean state) {
+    	if (state == true) {
+    		tree.setAttribute(DTKeys.ATTR_TREE_EDITABLE, true);
+    	} else {
+    		tree.setAttribute(DTKeys.ATTR_TREE_EDITABLE, false);
+    	}
     }
 
     private DefaultTreeModel<DTRow> getTreeModel() {
@@ -47,6 +56,7 @@ public class DTComposer extends GenericForwardComposer<Component> {
     private Treecols getColumns(List<DTColumn> cols) {
     	Treecols treeCols = new Treecols();
     	treeCols.setSizable(true);
+
     	for (DTColumn c : cols) {
     		Treecol col = new Treecol(c.getValue());
     		treeCols.appendChild(col);
@@ -59,13 +69,8 @@ public class DTComposer extends GenericForwardComposer<Component> {
         DTNode root = new DTNode(null, new DTNodeCollection(){{
         	for (int i = 0; i < data.size(); i++) {
         		if (data.get(i)[1].isEmpty()) {
-        			DTRow row = new DTRow();
-                    row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_NONEDITABLE);
-                    row.addCell(new DTCell("" + (i + 1)));
-                    for (int j = 2; j < data.get(i).length; j++) {
-                    	row.addCell(new DTCell(data.get(i)[j]));
-                    }
-                    add(new DTNode(row));
+        			DTRow row = DTItemUtil.generateDTRow(data.get(i), tree, i);
+                    add(new DTNode(row, null, false));
         		}
         	}
         }});
@@ -97,6 +102,7 @@ public class DTComposer extends GenericForwardComposer<Component> {
     	DATA.add(new String[] {"16", "", "Y, bác sĩ", "100,62", "100,90", "100,90", "100,57", "100,97"});
 
     	COLUMNS = new ArrayList<DTColumn>();
+    	COLUMNS.add(new DTColumn());
     	COLUMNS.add(new DTColumn("TT"));
     	COLUMNS.add(new DTColumn("Chỉ tiêu Kinh tế - Xã hội"));
     	COLUMNS.add(new DTColumn("2011"));
