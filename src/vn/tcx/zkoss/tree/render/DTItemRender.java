@@ -1,5 +1,6 @@
 package vn.tcx.zkoss.tree.render;
 
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Menupopup;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
@@ -7,12 +8,21 @@ import org.zkoss.zul.TreeitemRenderer;
 import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.constant.DTKeys;
+import vn.tcx.zkoss.tree.menu.DTMenu;
 import vn.tcx.zkoss.tree.menu.DTMenuPopup;
+import vn.tcx.zkoss.tree.menu.listener.DoubleClickMouseEventListener;
+import vn.tcx.zkoss.tree.menu.listener.EnterKeyEventListener;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.template.DTEditable;
 import vn.tcx.zkoss.tree.template.DTNonEditable;
 
 public class DTItemRender implements TreeitemRenderer<DTNode> {
+
+	DTMenu contextMenu;
+
+	public DTItemRender(DTMenu menu) {
+		contextMenu = menu;
+	}
 
     @Override
     public void render(Treeitem item, DTNode data, int index) throws Exception {
@@ -34,10 +44,9 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
         for (int i = 0; i < cells.length; i++) {
         	if (item.getTree().getAttribute(DTKeys.ATTR_TREE_EDITABLE) != null
         			&& item.getTree().getAttribute(DTKeys.ATTR_TREE_EDITABLE).equals(true)) {
-        		// Set context menu cho tung cell.
-        		cells[i].setContext((Menupopup) new DTMenuPopup(item, row, cells[i]).getBaseMenu());
-//            	item.addEventListener(Events.ON_DOUBLE_CLICK, new ModifyMouseEventListener(item, row, cells[i]));
-//            	item.addEventListener(Events.ON_OK, new UpdateEventListener(item, row, cells[i]));
+        		cells[i].setContext(contextMenu.createMenu(item, row, cells[i]));
+            	item.addEventListener(Events.ON_DOUBLE_CLICK, new DoubleClickMouseEventListener(item, row, cells[i]));
+            	item.addEventListener(Events.ON_OK, new EnterKeyEventListener(item, row, cells[i]));
         	}
             row.appendChild(cells[i]);
         }

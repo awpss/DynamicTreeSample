@@ -19,32 +19,15 @@ import vn.tcx.zkoss.tree.menu.listener.ModifyEventListener;
 import vn.tcx.zkoss.tree.menu.listener.RemoveEventListener;
 import vn.tcx.zkoss.tree.menu.listener.UpdateEventListener;
 import vn.tcx.zkoss.tree.model.DTNode;
-import vn.tcx.zkoss.tree.model.DTRow;
 
-public class DTMenuPopup extends Menupopup {
+public class DTMenuPopup extends Menupopup implements DTMenu {
 
-    private Treeitem treeItem;
-    private Treerow  treeRow;
-    private Treecell treeCell;
-
-    public DTMenuPopup(Treeitem treeItem, Treerow treeRow, Treecell treeCell) {
-        super();
-        this.setPage(treeItem.getPage());
-        this.treeItem = treeItem;
-        this.treeRow = treeRow;
-        this.treeCell = treeCell;
+    public DTMenuPopup() {
+    	super();
     }
 
-    public DTMenuPopup(Treeitem treeItem, Treerow treeRow, Treecell treeCell, Map<String, EventListener<Event>> listeners) {
-        super();
-        this.treeItem = treeItem;
-        this.treeRow = treeRow;
-        this.treeCell = treeCell;
-    }
-
-
-    public void createBaseMenu() {
-
+    public void createBaseMenu(Treeitem treeItem, Treerow treeRow, Treecell treeCell) {
+    	this.setPage(treeItem.getPage());
     	if (((DTNode) treeItem.getValue()).getData().getProperty(DTKeys.ROW_TEMPLATE) != null) {
         	if (((DTNode) treeItem.getValue()).getData().getProperty(DTKeys.ROW_TEMPLATE).equals(DTKeys.ROW_EDITABLE)) {
             	Map<DTListenerKeys, EventListener<Event>> updateListener = new HashMap<DTListenerKeys, EventListener<Event>>();
@@ -77,12 +60,6 @@ public class DTMenuPopup extends Menupopup {
     	addMenuItem(remove);
     }
 
-    public DTMenuPopup getBaseMenu() {
-    	createBaseMenu();
-        return this;
-    }
-
-
     public void addMenuItem(Menuitem menuItem) {
         this.appendChild(menuItem);
     }
@@ -90,5 +67,12 @@ public class DTMenuPopup extends Menupopup {
     public void removeMenuItem(Menuitem menuItem) {
         this.removeChild(menuItem);
     }
+
+
+	public Menupopup createMenu(Treeitem item, Treerow row, Treecell cell) {
+		DTMenuPopup m = new DTMenuPopup();
+		m.createBaseMenu(item, row, cell);
+		return (Menupopup) m;
+	}
 
 }

@@ -10,13 +10,13 @@ import vn.tcx.zkoss.tree.constant.DTKeys;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
 
-public class ModifyMouseEventListener implements EventListener<MouseEvent> {
+public class DoubleClickMouseEventListener implements EventListener<MouseEvent> {
 
     private Treeitem treeItem;
     private Treerow treeRow;
     private Treecell treeCell;
 
-    public ModifyMouseEventListener(Treeitem treeItem, Treerow treeRow,
+    public DoubleClickMouseEventListener(Treeitem treeItem, Treerow treeRow,
             Treecell treeCell) {
         this.treeItem = treeItem;
         this.treeRow = treeRow;
@@ -24,13 +24,8 @@ public class ModifyMouseEventListener implements EventListener<MouseEvent> {
     }
 
     public void onEvent(MouseEvent event) throws Exception {
-
-    	if (event.getTarget() != null && treeItem != null) {
-        	DTNode selectedTreeNode = treeItem.getValue();
-        	DTRow row = selectedTreeNode.getData();
-    		row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_EDITABLE);
-    		selectedTreeNode.setData(row);
-    	}
-   	}
+    	new ModifyEventListener(treeItem, treeRow, treeCell).onEvent(event);
+		event.stopPropagation();
+    }
 
 }

@@ -5,10 +5,16 @@ import java.util.List;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.DefaultTreeModel;
+import org.zkoss.zul.Menupopup;
 import org.zkoss.zul.Tree;
+import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treecols;
+import org.zkoss.zul.Treeitem;
+import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.constant.DTKeys;
+import vn.tcx.zkoss.tree.menu.DTMenu;
+import vn.tcx.zkoss.tree.menu.DTMenuPopup;
 import vn.tcx.zkoss.tree.model.DTColumn;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
@@ -44,8 +50,7 @@ public class DTComposer extends GenericForwardComposer<Component> implements DTT
         } else {
         	createTreeModelFromListStringArray(data);
         }
-
-        tcxTree.setItemRenderer(new DTItemRender());
+        tcxTree.setItemRenderer(new DTItemRender(new DTMenuPopup()));
     }
 
     public void createTreeModelFromListStringArray(List<String[]> data) {

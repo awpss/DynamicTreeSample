@@ -1,7 +1,7 @@
 <?page title="Dynamic Tree Sample"?>
 <zk>
 	<window apply="vn.tcx.zkoss.tree.composer.DTDemoComposer, vn.tcx.zkoss.tree.composer.DTTreeSelector">
-		<tree id="tree"/>
+		<tree id="tcxTree"/>
 	    <button id="btnDisable" label="Disable" />
 	    <button id="btnEnable" label="Enable" />
 	</window>
