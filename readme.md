@@ -1,18 +1,12 @@
-View\: *.zul
-<code>
-	
-	
-		<zk>
-			<window apply="vn.tcx.zkoss.tree.composer.DTDemoComposer">
-				<tree id="tcxTree"/>
-	 		</window>
-		</zk>
+Trong file view cần sử dụng DTree thêm tag dưới\:
+Ví dụ\:
 
-</code>
+	<tree id="tcxTree" apply="vn.tcx.zkoss.tree.composer.DTDemoComposer"/>
 
-Composer\:
-	<code>
-		
+
+Tạo một class với tên bất kỳ extends class DTComposer\:
+Ví dụ\:
+
 		package vn.tcx.zkoss.tree.composer;
 		import java.util.ArrayList;
 
@@ -74,4 +68,3 @@ Composer\:
 		        tcxTree.setItemRenderer(new DTItemRender(new DTMenuPopup()));
 			}
 		}
-	</code>
