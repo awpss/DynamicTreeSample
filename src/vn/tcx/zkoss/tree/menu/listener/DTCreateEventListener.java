@@ -11,15 +11,15 @@ import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
 import vn.tcx.zkoss.tree.render.DTItemUtil;
 
-public class CreateChildEventListener implements EventListener<Event> {
+public class DTCreateEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
     @SuppressWarnings("unused")
 	private Treerow treeRow;
     @SuppressWarnings("unused")
-	private Treecell treeCell;
+    private Treecell treeCell;
 
-    public CreateChildEventListener(Treeitem treeItem, Treerow treeRow,
+    public DTCreateEventListener(Treeitem treeItem, Treerow treeRow,
             Treecell treeCell) {
         this.treeItem = treeItem;
         this.treeRow = treeRow;
@@ -29,13 +29,17 @@ public class CreateChildEventListener implements EventListener<Event> {
     public void onEvent(Event event) throws Exception {
     	DTNode selectedTreeNode = treeItem.getValue();
     	String[] data = DTItemUtil.createEmptyDataBaseOnColumns(treeItem.getTree());
-
     	DTRow row = DTItemUtil.generateDTRow(data, treeItem.getTree(), treeItem.getIndex());
 		row.setProperty(DTRowKeys.ROW_EDITABLE, true);
-        DTNode newNode = new DTNode(row, null);
-        selectedTreeNode.getChildren().add(newNode);
-        treeItem.setOpen(true);
 
+        DTNode newNode = new DTNode(row, null);
+        if (selectedTreeNode.getParent() == null) {
+            selectedTreeNode.getModel().getRoot().insert(newNode, treeItem.getIndex());
+        } else {
+        	selectedTreeNode.getParent().insert(newNode, treeItem.getIndex());
+        }
+
+        // Update stt
     }
 
 }

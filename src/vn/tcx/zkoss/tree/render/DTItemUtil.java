@@ -10,7 +10,7 @@ import org.zkoss.zul.Treerow;
 import vn.tcx.zkoss.tree.constant.DTCellKeys;
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
-import vn.tcx.zkoss.tree.menu.listener.DropRowListener;
+import vn.tcx.zkoss.tree.menu.listener.DTDropRowListener;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
@@ -20,7 +20,7 @@ public class DTItemUtil {
 	public static void setDragDrop(Treeitem item, Treerow row) {
         row.setDroppable("true");
         row.setDraggable("true");
-        row.addEventListener(Events.ON_DROP, new DropRowListener(item));
+        row.addEventListener(Events.ON_DROP, new DTDropRowListener(item));
 	}
 
 	public static void setPrepareForFirstShow(Treeitem item) {
@@ -41,18 +41,22 @@ public class DTItemUtil {
             	checkBoxCell.setProperty(DTCellKeys.WIDTH, "30px");
             	row.addCell(checkBoxCell);
             }
+            if (tree.getAttribute(DTTreeKeys.HAS_NO_COLUMN.toString()).equals(true)) {
+            	DTCell noCell = new DTCell("" + (index + 1));
+            	noCell.setProperty(DTCellKeys.WIDTH, "30px");
+            	row.addCell(noCell);
+            }
 
-        	DTCell noCell = new DTCell("" + (index + 1));
-        	noCell.setProperty(DTCellKeys.WIDTH, "30px");
-        	row.addCell(noCell);
-        	row.setProperty(DTRowKeys.ROW_ID, data[0]);
-        	row.setProperty(DTRowKeys.ROW_PARENT_ID, data[1]);
 
             for (int j = 2; j < data.length; j++) {
             	DTCell cell = new DTCell(data[j]);
             	cell.setProperty(DTCellKeys.WIDTH, "100%");
             	row.addCell(cell);
             }
+
+        	row.setProperty(DTRowKeys.ROW_ID, data[0]);
+        	row.setProperty(DTRowKeys.ROW_PARENT_ID, data[1]);
+
             return row;
 		}
 		return null;
@@ -60,9 +64,19 @@ public class DTItemUtil {
 
 	public static String[] createEmptyDataBaseOnColumns(Tree tree) {
 		String[] data = new String[2];
+		int size = 0;
+
+		if (tree.getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
+			size ++;
+		}
+
+		if (tree.getAttribute(DTTreeKeys.HAS_NO_COLUMN.toString()).equals(true)) {
+			size ++;
+		}
+
     	for (Component c : tree.getChildren()) {
     		if (c instanceof Treecols) {
-    			data = new String[c.getChildren().size()];
+    			data = new String[c.getChildren().size() + 2 - size];
     		}
     	}
 

@@ -13,11 +13,11 @@ import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.constant.DTListenerKeys;
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
-import vn.tcx.zkoss.tree.menu.listener.CreateChildEventListener;
-import vn.tcx.zkoss.tree.menu.listener.CreateEventListener;
-import vn.tcx.zkoss.tree.menu.listener.ModifyEventListener;
-import vn.tcx.zkoss.tree.menu.listener.RemoveEventListener;
-import vn.tcx.zkoss.tree.menu.listener.UpdateEventListener;
+import vn.tcx.zkoss.tree.menu.listener.DTCreateChildEventListener;
+import vn.tcx.zkoss.tree.menu.listener.DTCreateEventListener;
+import vn.tcx.zkoss.tree.menu.listener.DTModifyEventListener;
+import vn.tcx.zkoss.tree.menu.listener.DTRemoveEventListener;
+import vn.tcx.zkoss.tree.menu.listener.DTUpdateEventListener;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
 
@@ -39,23 +39,23 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
     	if (row.getProperty(DTRowKeys.ROW_EDITABLE) != null) {
         	if (row.getProperty(DTRowKeys.ROW_EDITABLE).equals(true)) {
             	Map<DTListenerKeys, EventListener<Event>> updateListener = new HashMap<DTListenerKeys, EventListener<Event>>();
-            	updateListener.put(DTListenerKeys.ON_CLICK, new UpdateEventListener(treeItem, treeRow, treeCell));
+            	updateListener.put(DTListenerKeys.ON_CLICK, new DTUpdateEventListener(treeItem, treeRow, treeCell));
             	Menuitem update = DTMenuItemUtil.createMenuItem("Cập nhập dữ liệu", updateListener);
             	addMenuItem(update);
         	}
     	}
 
     	Map<DTListenerKeys, EventListener<Event>> createListener = new HashMap<DTListenerKeys, EventListener<Event>>();
-    	createListener.put(DTListenerKeys.ON_CLICK, new CreateEventListener(treeItem, treeRow, treeCell));
+    	createListener.put(DTListenerKeys.ON_CLICK, new DTCreateEventListener(treeItem, treeRow, treeCell));
 
     	Map<DTListenerKeys, EventListener<Event>> createChildListener = new HashMap<DTListenerKeys, EventListener<Event>>();
-    	createChildListener.put(DTListenerKeys.ON_CLICK, new CreateChildEventListener(treeItem, treeRow, treeCell));
+    	createChildListener.put(DTListenerKeys.ON_CLICK, new DTCreateChildEventListener(treeItem, treeRow, treeCell));
 
     	Map<DTListenerKeys, EventListener<Event>> modifyListener = new HashMap<DTListenerKeys, EventListener<Event>>();
-    	modifyListener.put(DTListenerKeys.ON_CLICK, new ModifyEventListener(treeItem, treeRow, treeCell));
+    	modifyListener.put(DTListenerKeys.ON_CLICK, new DTModifyEventListener(treeItem, treeRow, treeCell));
 
     	Map<DTListenerKeys, EventListener<Event>> removeListener = new HashMap<DTListenerKeys, EventListener<Event>>();
-    	removeListener.put(DTListenerKeys.ON_CLICK, new RemoveEventListener(treeItem, treeRow, treeCell));
+    	removeListener.put(DTListenerKeys.ON_CLICK, new DTRemoveEventListener(treeItem, treeRow, treeCell));
 
     	Menuitem create = DTMenuItemUtil.createMenuItem("Thêm chỉ tiêu", createListener);
     	Menuitem createChild = DTMenuItemUtil.createMenuItem("Thêm chỉ tiêu con", createChildListener);

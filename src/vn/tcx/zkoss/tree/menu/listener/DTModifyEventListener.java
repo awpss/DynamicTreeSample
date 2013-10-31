@@ -6,9 +6,11 @@ import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
+import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.model.DTNode;
+import vn.tcx.zkoss.tree.model.DTRow;
 
-public class RemoveEventListener implements EventListener<Event> {
+public class DTModifyEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
     @SuppressWarnings("unused")
@@ -16,7 +18,7 @@ public class RemoveEventListener implements EventListener<Event> {
     @SuppressWarnings("unused")
     private Treecell treeCell;
 
-    public RemoveEventListener(Treeitem treeItem, Treerow treeRow,
+    public DTModifyEventListener(Treeitem treeItem, Treerow treeRow,
             Treecell treeCell) {
         this.treeItem = treeItem;
         this.treeRow = treeRow;
@@ -24,12 +26,11 @@ public class RemoveEventListener implements EventListener<Event> {
     }
 
     public void onEvent(Event event) throws Exception {
-    	// Business logic here!!!
-
-    	// Frontend here
-		DTNode selectedTreeNode = (DTNode)treeItem.getValue();
-		selectedTreeNode.removeFromParent();
-
+    	DTNode selectedTreeNode = treeItem.getValue();
+    	DTRow row = selectedTreeNode.getData();
+		row.setProperty(DTRowKeys.ROW_EDITABLE, true);
+		selectedTreeNode.setData(row);
+		treeItem.getTree().setModel(treeItem.getTree().getModel());
     }
 
 }

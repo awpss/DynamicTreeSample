@@ -33,11 +33,6 @@ public class DTTreeFixedData {
 
     	COLUMNS = new ArrayList<DTColumn>();
 
-    	DTColumn col1 = new DTColumn();
-    	col1.setProperty(DTColumnKeys.WIDTH.toString(), "80px");
-
-    	COLUMNS.add(col1);
-    	COLUMNS.add(new DTColumn("TT") {{ setProperty(DTColumnKeys.WIDTH.toString(), "40px"); }});
     	COLUMNS.add(new DTColumn("Chỉ tiêu Kinh tế - Xã hội") {{ setProperty(DTColumnKeys.WIDTH.toString(), "400px"); }});
     	COLUMNS.add(new DTColumn("2011") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});
     	COLUMNS.add(new DTColumn("2012") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});

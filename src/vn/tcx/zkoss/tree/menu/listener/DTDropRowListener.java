@@ -8,11 +8,11 @@ import org.zkoss.zul.Treeitem;
 
 import vn.tcx.zkoss.tree.model.DTNode;
 
-public class DropRowListener implements EventListener<DropEvent> {
+public class DTDropRowListener implements EventListener<DropEvent> {
 
     private Treeitem droppedItem;
 
-    public DropRowListener(Treeitem treeItem) {
+    public DTDropRowListener(Treeitem treeItem) {
         this.droppedItem = treeItem;
     }
 
