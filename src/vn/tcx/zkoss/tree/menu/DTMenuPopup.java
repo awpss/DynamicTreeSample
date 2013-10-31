@@ -45,8 +45,6 @@ public class DTMenuPopup extends Menupopup {
 
     public void createBaseMenu() {
 
-
-    	System.out.println(((DTNode) treeItem.getValue()).getData().getProperty(DTKeys.ROW_TEMPLATE));
     	if (((DTNode) treeItem.getValue()).getData().getProperty(DTKeys.ROW_TEMPLATE) != null) {
         	if (((DTNode) treeItem.getValue()).getData().getProperty(DTKeys.ROW_TEMPLATE).equals(DTKeys.ROW_EDITABLE)) {
             	Map<DTListenerKeys, EventListener<Event>> updateListener = new HashMap<DTListenerKeys, EventListener<Event>>();
