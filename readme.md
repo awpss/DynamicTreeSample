@@ -1,16 +1,15 @@
-View: *.zul
-
-<?page title="Dynamic Tree Sample"?>
-	:::xml
+View\: *.zul
+<code>
+		<?page title="Dynamic Tree Sample"?>
 		<zk>
 			<window apply="vn.tcx.zkoss.tree.composer.DTDemoComposer">
 				<tree id="tcxTree"/>
 	 		</window>
 		</zk>
+</code>
 
-Composer:
-
-	:::java
+Composer\:
+	<code>
 		package vn.tcx.zkoss.tree.composer;
 
 		import java.util.ArrayList;
@@ -73,4 +72,4 @@ Composer:
 		        tcxTree.setItemRenderer(new DTItemRender(new DTMenuPopup()));
 			}
 		}
-		
+	</code>
