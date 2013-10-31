@@ -1,8 +1,12 @@
+MANUAL
+========================
+
+Download file DTree.jar copy vào thư mục /WEB-INF/lib
+
 Trong file view cần sử dụng DTree thêm tag dưới\:
 Ví dụ\:
 
 	<tree id="tcxTree" apply="vn.tcx.zkoss.tree.composer.DTDemoComposer"/>
-
 
 Tạo một class với tên bất kỳ extends class DTComposer\:
 Ví dụ\:
