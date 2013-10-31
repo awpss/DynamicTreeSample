@@ -10,7 +10,8 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 
-import vn.tcx.zkoss.tree.constant.DTKeys;
+import vn.tcx.zkoss.tree.constant.DTCellKeys;
+import vn.tcx.zkoss.tree.constant.DTTreeKeys;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTNode;
 
@@ -25,15 +26,15 @@ public class DTTemplateUtil {
         for (DTCell c : data.getData().getCells()) {
     		Treecell cell = new Treecell();
 
-    		if (i == 0 && item.getTree().getAttribute(DTKeys.ATTR_TREE_CHECKABLE).equals(true)) {
+    		if (i == 0 && item.getTree().getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
     			cell.appendChild(new Label(c.getValue()));
     		} else {
             	if (mode == NONEDITABLE) {
                     cell.appendChild(new Label(c.getValue()));
             	} else {
 
-            		if (c.getProperty(DTKeys.PROP_CELL_INPUT_TYPE) != null) {
-            			Class<Component> cls = (Class<Component>) c.getProperty(DTKeys.PROP_CELL_INPUT_TYPE);
+            		if (c.getProperty(DTCellKeys.INPUT_TYPE) != null) {
+            			Class<Component> cls = (Class<Component>) c.getProperty(DTCellKeys.INPUT_TYPE);
             			try {
 
             				Component t = cls.newInstance();
@@ -53,8 +54,8 @@ public class DTTemplateUtil {
     					}
             		} else {
             			Textbox t = new Textbox(c.getValue());
-                        if (c.getProperty(DTKeys.PROP_CELL_WIDTH) != null) {
-                        	t.setWidth(c.getProperty(DTKeys.PROP_CELL_WIDTH).toString());
+                        if (c.getProperty(DTCellKeys.WIDTH) != null) {
+                        	t.setWidth(c.getProperty(DTCellKeys.WIDTH).toString());
                         }
                         cell.appendChild(t);
             		}

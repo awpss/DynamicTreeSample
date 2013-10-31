@@ -6,7 +6,7 @@ import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
-import vn.tcx.zkoss.tree.constant.DTKeys;
+import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
 
@@ -28,7 +28,7 @@ public class ModifyEventListener implements EventListener<Event> {
     public void onEvent(Event event) throws Exception {
     	DTNode selectedTreeNode = treeItem.getValue();
     	DTRow row = selectedTreeNode.getData();
-		row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_EDITABLE);
+		row.setProperty(DTRowKeys.ROW_EDITABLE, true);
 		selectedTreeNode.setData(row);
 		treeItem.getTree().setModel(treeItem.getTree().getModel());
     }

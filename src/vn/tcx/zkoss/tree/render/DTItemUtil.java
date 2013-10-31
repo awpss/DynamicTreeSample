@@ -7,7 +7,9 @@ import org.zkoss.zul.Treecols;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
-import vn.tcx.zkoss.tree.constant.DTKeys;
+import vn.tcx.zkoss.tree.constant.DTCellKeys;
+import vn.tcx.zkoss.tree.constant.DTRowKeys;
+import vn.tcx.zkoss.tree.constant.DTTreeKeys;
 import vn.tcx.zkoss.tree.menu.listener.DropRowListener;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTNode;
@@ -32,23 +34,23 @@ public class DTItemUtil {
 		if (data[1].isEmpty()) {
 			DTRow row = new DTRow();
 
-			row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_NONEDITABLE);
+			row.setProperty(DTRowKeys.ROW_EDITABLE, false);
 
-            if (tree.getAttribute(DTKeys.ATTR_TREE_CHECKABLE).equals(true)) {
+            if (tree.getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
             	DTCell checkBoxCell = new DTCell();
-            	checkBoxCell.setProperty(DTKeys.PROP_CELL_WIDTH, "30px");
+            	checkBoxCell.setProperty(DTCellKeys.WIDTH, "30px");
             	row.addCell(checkBoxCell);
             }
 
         	DTCell noCell = new DTCell("" + (index + 1));
-        	noCell.setProperty(DTKeys.PROP_CELL_WIDTH, "30px");
+        	noCell.setProperty(DTCellKeys.WIDTH, "30px");
         	row.addCell(noCell);
+        	row.setProperty(DTRowKeys.ROW_ID, data[0]);
+        	row.setProperty(DTRowKeys.ROW_PARENT_ID, data[1]);
 
             for (int j = 2; j < data.length; j++) {
             	DTCell cell = new DTCell(data[j]);
-            	cell.setProperty(DTKeys.PROP_ROW_ID, data[0]);
-            	cell.setProperty(DTKeys.PROP_ROW_PARENT_ID, data[1]);
-            	cell.setProperty(DTKeys.PROP_CELL_WIDTH, "100%");
+            	cell.setProperty(DTCellKeys.WIDTH, "100%");
             	row.addCell(cell);
             }
             return row;

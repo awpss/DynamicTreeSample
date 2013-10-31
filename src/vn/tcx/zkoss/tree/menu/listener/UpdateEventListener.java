@@ -11,7 +11,7 @@ import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
-import vn.tcx.zkoss.tree.constant.DTKeys;
+import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
@@ -45,7 +45,7 @@ public class UpdateEventListener implements EventListener<Event> {
     		}
     	}
     	row.setCells(cells);
-		row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_NONEDITABLE);
+		row.setProperty(DTRowKeys.ROW_EDITABLE, false);
 		selectedTreeNode.setData(row);
 		treeItem.getTree().setModel(treeItem.getTree().getModel());
 

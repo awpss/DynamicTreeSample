@@ -6,7 +6,7 @@ import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
-import vn.tcx.zkoss.tree.constant.DTKeys;
+import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
 import vn.tcx.zkoss.tree.render.DTItemUtil;
@@ -30,7 +30,7 @@ public class CreateEventListener implements EventListener<Event> {
     	DTNode selectedTreeNode = treeItem.getValue();
     	String[] data = DTItemUtil.createEmptyDataBaseOnColumns(treeItem.getTree());
     	DTRow row = DTItemUtil.generateDTRow(data, treeItem.getTree(), treeItem.getIndex());
-		row.setProperty(DTKeys.ROW_TEMPLATE, DTKeys.ROW_EDITABLE);
+		row.setProperty(DTRowKeys.ROW_EDITABLE, true);
 
         DTNode newNode = new DTNode(row, null);
         if (selectedTreeNode.getParent() == null) {

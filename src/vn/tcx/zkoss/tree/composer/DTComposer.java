@@ -8,7 +8,7 @@ import org.zkoss.zul.DefaultTreeModel;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treecols;
 
-import vn.tcx.zkoss.tree.constant.DTKeys;
+import vn.tcx.zkoss.tree.constant.DTTreeKeys;
 import vn.tcx.zkoss.tree.menu.DTMenuPopup;
 import vn.tcx.zkoss.tree.model.DTColumn;
 import vn.tcx.zkoss.tree.model.DTNode;
@@ -29,8 +29,8 @@ public class DTComposer extends GenericForwardComposer<Component> implements DTT
         super.doAfterCompose(comp);
 
         // Configuration
-        tcxTree.setAttribute(DTKeys.ATTR_TREE_CHECKABLE, true);
-        tcxTree.setAttribute(DTKeys.ATTR_TREE_EDITABLE, true);
+        tcxTree.setAttribute(DTTreeKeys.CHECKABLE.toString(), true);
+        tcxTree.setAttribute(DTTreeKeys.READ_ONLY.toString(), false);
 
         tcxTree.setMold("paging");
         tcxTree.setPageSize(10);
@@ -58,11 +58,11 @@ public class DTComposer extends GenericForwardComposer<Component> implements DTT
 
     public void setReadonly(boolean bool) {
     	if (bool) {
-    		tcxTree.setAttribute(DTKeys.ATTR_TREE_EDITABLE, false);
+    		tcxTree.setAttribute(DTTreeKeys.READ_ONLY.toString(), false);
     		tcxTree.setCheckmark(false);
     		tcxTree.setMultiple(false);
     	} else {
-    		tcxTree.setAttribute(DTKeys.ATTR_TREE_EDITABLE, true);
+    		tcxTree.setAttribute(DTTreeKeys.READ_ONLY.toString(), true);
     		tcxTree.setCheckmark(true);
             tcxTree.setMultiple(true);
     	}

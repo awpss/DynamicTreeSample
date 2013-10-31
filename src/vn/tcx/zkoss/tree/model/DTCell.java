@@ -3,25 +3,27 @@ package vn.tcx.zkoss.tree.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.tcx.zkoss.tree.constant.DTCellKeys;
+
 /**
- * 
+ *
  * The tree cell.
- * 
+ *
  * @author AnhMV
  * @version 1.0
  */
 public class DTCell {
-    
+
     private String value;
-    private Map<String, Object> properties;
-    
+    private Map<DTCellKeys, Object> properties;
+
     public DTCell() { }
-    
+
     public DTCell(String value) {
         this.value = value;
     }
-    
-    public DTCell(String value, Map<String, Object> properties) {
+
+    public DTCell(String value, Map<DTCellKeys, Object> properties) {
         this.value = value;
         this.properties = properties;
     }
@@ -34,22 +36,22 @@ public class DTCell {
         this.value = value;
     }
 
-    public Map<String, Object> getProperties() {
+    public Map<DTCellKeys, Object> getProperties() {
         return properties;
     }
 
-    public void setProperties(Map<String, Object> properties) {
+    public void setProperties(Map<DTCellKeys, Object> properties) {
         this.properties = properties;
     }
-    
-    public void setProperty(String key, Object value) {
+
+    public void setProperty(DTCellKeys key, Object value) {
         if (properties == null) {
-            properties = new HashMap<String, Object>();
+            properties = new HashMap<DTCellKeys, Object>();
         }
         properties.put(key, value);
     }
-    
-    public Object getProperty(String key) {
+
+    public Object getProperty(DTCellKeys key) {
         if (properties == null) return null;
         return properties.get(key);
     }
