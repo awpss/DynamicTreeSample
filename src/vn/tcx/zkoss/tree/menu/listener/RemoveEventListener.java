@@ -12,7 +12,9 @@ import vn.tcx.zkoss.tree.model.DTNode;
 public class RemoveEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
+    @SuppressWarnings("unused")
     private Treerow treeRow;
+    @SuppressWarnings("unused")
     private Treecell treeCell;
 
     public RemoveEventListener(Treeitem treeItem, Treerow treeRow,

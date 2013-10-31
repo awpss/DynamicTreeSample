@@ -13,7 +13,9 @@ import vn.tcx.zkoss.tree.model.DTRow;
 public class ModifyEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
+    @SuppressWarnings("unused")
     private Treerow treeRow;
+    @SuppressWarnings("unused")
     private Treecell treeCell;
 
     public ModifyEventListener(Treeitem treeItem, Treerow treeRow,

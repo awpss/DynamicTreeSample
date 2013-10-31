@@ -1,29 +1,23 @@
 package vn.tcx.zkoss.tree.menu.listener;
 
-import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zul.DefaultTreeModel;
-import org.zkoss.zul.Menupopup;
 import org.zkoss.zul.Treecell;
-import org.zkoss.zul.Treechildren;
-import org.zkoss.zul.Treecols;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.constant.DTKeys;
-import vn.tcx.zkoss.tree.menu.DTMenuPopup;
 import vn.tcx.zkoss.tree.model.DTNode;
-import vn.tcx.zkoss.tree.model.DTNodeCollection;
 import vn.tcx.zkoss.tree.model.DTRow;
 import vn.tcx.zkoss.tree.render.DTItemUtil;
-import vn.tcx.zkoss.tree.template.DTEditable;
 
 public class CreateChildEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
-    private Treerow treeRow;
-    private Treecell treeCell;
+    @SuppressWarnings("unused")
+	private Treerow treeRow;
+    @SuppressWarnings("unused")
+	private Treecell treeCell;
 
     public CreateChildEventListener(Treeitem treeItem, Treerow treeRow,
             Treecell treeCell) {

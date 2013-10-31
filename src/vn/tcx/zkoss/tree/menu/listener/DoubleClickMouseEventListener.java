@@ -6,10 +6,6 @@ import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
-import vn.tcx.zkoss.tree.constant.DTKeys;
-import vn.tcx.zkoss.tree.model.DTNode;
-import vn.tcx.zkoss.tree.model.DTRow;
-
 public class DoubleClickMouseEventListener implements EventListener<MouseEvent> {
 
     private Treeitem treeItem;

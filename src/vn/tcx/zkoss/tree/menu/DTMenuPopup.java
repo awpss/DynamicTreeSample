@@ -22,7 +22,13 @@ import vn.tcx.zkoss.tree.model.DTNode;
 
 public class DTMenuPopup extends Menupopup implements DTMenu {
 
-    public DTMenuPopup() {
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = 843814938783210868L;
+
+
+	public DTMenuPopup() {
     	super();
     }
 

@@ -20,6 +20,7 @@ public class UpdateEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
     private Treerow treeRow;
+    @SuppressWarnings("unused")
     private Treecell treeCell;
 
     public UpdateEventListener(Treeitem treeItem, Treerow treeRow,
