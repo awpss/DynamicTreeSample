@@ -1,10 +1,15 @@
-package vn.tcx.zkoss.tree.menu.listener;
+package vn.tcx.zkoss.tree.listener;
 
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.MouseEvent;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
+
+import vn.tcx.zkoss.tree.constant.DTRowKeys;
+import vn.tcx.zkoss.tree.model.DTNode;
 
 public class DTDoubleClickMouseEventListener implements EventListener<MouseEvent> {
 
@@ -20,7 +25,14 @@ public class DTDoubleClickMouseEventListener implements EventListener<MouseEvent
     }
 
     public void onEvent(MouseEvent event) throws Exception {
-    	new DTModifyEventListener(treeItem, treeRow, treeCell).onEvent(event);
+    	if (((DTNode)treeItem.getValue()).getData().getProperty(DTRowKeys.ROW_EDITABLE).equals(false)) {
+        	new DTModifyEventListener(treeItem, treeRow, treeCell).onEvent(event);
+        	for (Component c : treeCell.getChildren()) {
+        		if (c instanceof Textbox) {
+        			((Textbox) c).focus();
+        		}
+        	}
+    	}
 		event.stopPropagation();
     }
 

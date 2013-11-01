@@ -46,6 +46,11 @@ public class DTTreeManagerUtil {
     	for (DTColumn c : cols) {
     		Treecol col = new Treecol(c.getValue());
     		col.setWidth(c.getProperty(DTColumnKeys.WIDTH.toString()).toString());
+
+    		String expression = (String) c.getProperty(DTColumnKeys.EXPRESSION.toString());
+    		if (expression != null && !expression.isEmpty()) {
+    			col.setAttribute(DTColumnKeys.EXPRESSION.toString(), expression);
+    		}
     		treeCols.appendChild(col);
     	}
 

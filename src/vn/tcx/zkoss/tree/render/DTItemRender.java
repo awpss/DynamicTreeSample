@@ -8,9 +8,9 @@ import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
+import vn.tcx.zkoss.tree.listener.DTDoubleClickMouseEventListener;
+import vn.tcx.zkoss.tree.listener.DTEnterKeyEventListener;
 import vn.tcx.zkoss.tree.menu.DTMenu;
-import vn.tcx.zkoss.tree.menu.listener.DTDoubleClickMouseEventListener;
-import vn.tcx.zkoss.tree.menu.listener.DTEnterKeyEventListener;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
 import vn.tcx.zkoss.tree.template.DTEditable;
@@ -44,6 +44,7 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
             	item.addEventListener(Events.ON_DOUBLE_CLICK, new DTDoubleClickMouseEventListener(item, row, cells[i]));
             	item.addEventListener(Events.ON_OK, new DTEnterKeyEventListener(item, row, cells[i]));
         	}
+
             row.appendChild(cells[i]);
         }
 
@@ -56,7 +57,9 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
 
 	        DTItemUtil.setDragDrop(item, row);
 	        DTItemUtil.setPrepareForFirstShow(item);
+
     	}
+
     }
 
 }

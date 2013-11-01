@@ -3,14 +3,16 @@ package vn.tcx.zkoss.tree.render;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Tree;
+import org.zkoss.zul.Treecol;
 import org.zkoss.zul.Treecols;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.constant.DTCellKeys;
+import vn.tcx.zkoss.tree.constant.DTColumnKeys;
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
-import vn.tcx.zkoss.tree.menu.listener.DTDropRowListener;
+import vn.tcx.zkoss.tree.listener.DTDropRowListener;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
@@ -32,6 +34,7 @@ public class DTItemUtil {
 
 	public static DTRow generateDTRow(String[] data, Tree tree, int index) {
 		if (data[1].isEmpty()) {
+
 			DTRow row = new DTRow();
 
 			row.setProperty(DTRowKeys.ROW_EDITABLE, false);
@@ -50,7 +53,18 @@ public class DTItemUtil {
 
             for (int j = 2; j < data.length; j++) {
             	DTCell cell = new DTCell(data[j]);
+            	String size = "100%";
+            	if (j == 2 && countCalculationColumns(tree) > 0) {
+            		size = "85%";
+            	}
+            	cell.setProperty(DTCellKeys.WIDTH, size);
+            	row.addCell(cell);
+            }
+
+            for (int i = 0; i < countCalculationColumns(tree); i++) {
+            	DTCell cell = new DTCell();
             	cell.setProperty(DTCellKeys.WIDTH, "100%");
+            	cell.setProperty(DTCellKeys.CALC_EXPRESSION, getCalculationTreecol(tree)[i]);
             	row.addCell(cell);
             }
 
@@ -62,24 +76,123 @@ public class DTItemUtil {
 		return null;
 	}
 
-	public static String[] createEmptyDataBaseOnColumns(Tree tree) {
-		String[] data = new String[2];
+	private static Treecol[] getCalculationTreecol(Tree tree) {
+		Treecol[] cols = new Treecol[countCalculationColumns(tree)];
 		int size = 0;
+		Treecols treeCols = getTreecolsFromParent(tree);
 
+		if (treeCols != null) {
+			for (Component c : treeCols.getChildren()) {
+				String expression = (String) ((Treecol) c).getAttribute(DTColumnKeys.EXPRESSION.toString());
+				if (expression != null && !expression.isEmpty()) {
+					cols[size++] = (Treecol) c;
+				}
+			}
+		}
+		return cols;
+	}
+
+	private static Treecols getTreecolsFromParent(Tree tree) {
+		Treecols treeCols = null;
+
+		for (Component c : tree.getChildren()) {
+    		if (c instanceof Treecols) {
+    			treeCols = (Treecols) c;
+    			break;
+    		}
+    	}
+		return treeCols;
+	}
+
+	public static boolean isCalculationColumn(Tree tree, int index) {
+		int[] cols = new int[countNormalColumns(tree) + countCalculationColumns(tree)];
+		Treecols treeCols = getTreecolsFromParent(tree);
+
+		if (treeCols != null) {
+			for (int i = 0; i < treeCols.getChildren().size(); i++) {
+				Treecol c = (Treecol) treeCols.getChildren().get(i);
+				String expression = (String) (c.getAttribute(DTColumnKeys.EXPRESSION.toString()));
+				if (expression != null && !expression.isEmpty()) {
+					cols[i] = 1;
+				}
+
+			}
+		}
+
+		return cols[index] == 1;
+	}
+
+	public static String getCalculationExpression(Tree tree, int index) {
+		Treecols treeCols = getTreecolsFromParent(tree);
+
+		if (treeCols != null) {
+			for (int i = 0; i < treeCols.getChildren().size(); i++) {
+				Treecol c = (Treecol) treeCols.getChildren().get(i);
+				String expression = (String) (c.getAttribute(DTColumnKeys.EXPRESSION.toString()));
+				if (expression != null && !expression.isEmpty() && index == i) {
+					return expression;
+				}
+
+			}
+		}
+		return null;
+	}
+
+	private static int countOptionColumns(Tree tree) {
+		int size = 0;
 		if (tree.getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
 			size ++;
 		}
-
 		if (tree.getAttribute(DTTreeKeys.HAS_NO_COLUMN.toString()).equals(true)) {
 			size ++;
 		}
+		return size;
+	}
 
-    	for (Component c : tree.getChildren()) {
+	public static int countColumns(Tree tree) {
+		return countCalculationColumns(tree) + countNormalColumns(tree);
+	}
+
+	public static int countNormalColumns(Tree tree) {
+
+		int size = countOptionColumns(tree);
+		for (Component c : tree.getChildren()) {
     		if (c instanceof Treecols) {
-    			data = new String[c.getChildren().size() + 2 - size];
+    			size = c.getChildren().size() - countCalculationColumns(tree);
     		}
     	}
 
+    	return size;
+	}
+
+	private static int countCalculationColumns(Tree tree) {
+		int size = 0;
+		Treecols treeCols = null;
+
+		for (Component c : tree.getChildren()) {
+    		if (c instanceof Treecols) {
+    			treeCols = (Treecols) c;
+    			break;
+    		}
+    	}
+
+		if (treeCols != null) {
+			for (Component c : treeCols.getChildren()) {
+				String expression = (String) ((Treecol) c).getAttribute(DTColumnKeys.EXPRESSION.toString());
+				if (expression != null && !expression.isEmpty()) {
+					size ++;
+				}
+			}
+		}
+
+		return size;
+	}
+
+	public static String[] createEmptyDataBaseOnColumns(Tree tree) {
+		String[] data = new String[2];
+		if (countNormalColumns(tree) > 2) {
+			data = new String[countNormalColumns(tree)];
+		}
     	for (int i = 0; i < data.length; i++) {
     		data[i] = "";
     	}
