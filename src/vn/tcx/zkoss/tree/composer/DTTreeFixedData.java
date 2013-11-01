@@ -45,7 +45,7 @@ public class DTTreeFixedData {
     	COLUMNS.add(new DTColumn("2013") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});
     	COLUMNS.add(new DTColumn("2014") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});
     	COLUMNS.add(new DTColumn("2015") {{ setProperty(DTColumnKeys.WIDTH.toString(), "50px"); }});
-    	COLUMNS.add(new DTColumn("Tổng 2 năm cuối") {{ setProperty(DTColumnKeys.WIDTH.toString(), "110px"); setProperty(DTColumnKeys.EXPRESSION.toString(), "4 + 5 + 1");}});
+    	COLUMNS.add(new DTColumn("Tổng 2 năm cuối") {{ setProperty(DTColumnKeys.WIDTH.toString(), "110px"); setProperty(DTColumnKeys.EXPRESSION.toString(), "4 + 5");}});
     	COLUMNS.add(new DTColumn("Tổng 5 năm") {{ setProperty(DTColumnKeys.WIDTH.toString(), "110px"); setProperty(DTColumnKeys.EXPRESSION.toString(), "1 + 2 + 3 + 4 + 5");}});
 
     }
