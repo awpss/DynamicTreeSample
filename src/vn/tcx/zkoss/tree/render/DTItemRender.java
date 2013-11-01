@@ -47,7 +47,6 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
 
             row.appendChild(cells[i]);
         }
-
         item.appendChild(row);
     	if (item.getTree().getAttribute(DTTreeKeys.READ_ONLY.toString()).equals(false)) {
 
@@ -57,8 +56,8 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
 
 	        DTItemUtil.setDragDrop(item, row);
 	        DTItemUtil.setPrepareForFirstShow(item);
-
     	}
+    	item.setOpen(data.isOpen());
 
     }
 

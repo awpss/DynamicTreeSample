@@ -1,6 +1,10 @@
 package vn.tcx.zkoss.tree.composer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.DefaultTreeModel;
@@ -8,6 +12,7 @@ import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treecol;
 import org.zkoss.zul.Treecols;
 
+import vn.tcx.zkoss.tree.comparetor.DTItemComparetor;
 import vn.tcx.zkoss.tree.constant.DTColumnKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
 import vn.tcx.zkoss.tree.model.DTColumn;
@@ -18,24 +23,50 @@ import vn.tcx.zkoss.tree.render.DTItemUtil;
 
 public class DTTreeManagerUtil {
 
+	private static Map<String, List<String[]>> groupByParent(List<String[]> data) {
+		Map<String, List<String[]>> ret = new HashMap<String, List<String[]>>();
+
+		// sort by parentId
+		Collections.sort(data, new DTItemComparetor());
+
+		// group by parentId
+		for (String[] d : data) {
+			List<String[]> lst = null;
+			if (!ret.containsKey(d[1])) {
+				lst = new ArrayList<String[]>();
+				ret.put(d[1], lst);
+			}
+			lst = ret.get(d[1]);
+			lst.add(d);
+		}
+
+		System.out.println(ret.size());
+
+		return ret;
+	}
+
+	private static void nodeRecuise(Tree tree, DTNode node, Map<String, List<String[]>> groups, String key) {
+
+		if (groups.containsKey(key)) {
+			List<String[]> childs = groups.get(key);
+			for (String[] child : childs) {
+				DTRow row = DTItemUtil.generateDTRow(child, tree, 0);
+				DTNode childNode = new DTNode(row, new DTNodeCollection());
+				nodeRecuise(tree, childNode, groups, child[0]);
+				if (childNode.getChildren().size() > 0) {
+					childNode.setOpen(true);
+				}
+				node.add(childNode);
+			}
+			groups.remove(key);
+		}
+
+	}
+
 	protected static DTNode parseDataToRow(final Tree tree, final List<String[]> data) {
-        DTNode root = new DTNode(null, new DTNodeCollection() {{
-        	for (int i = 0; i < data.size(); i++) {
-        		if (data.get(i)[1].isEmpty()) {
-        			// sort by parentId
-
-        			// group by parentId
-
-        			// create nodes, if node has parentId is empty, it's root.
-        			// if node's id matching with id of a group, set parent for all child of group is the node
-        			// and remove the group.
-        			// while until all node created and don't exists any group.
-        			DTRow row = DTItemUtil.generateDTRow(data.get(i), tree, i);
-                    add(new DTNode(row, null, false));
-        		}
-        	}
-        }});
-
+		DTNode root = new DTNode(null, new DTNodeCollection(), true);
+		Map<String, List<String[]>> groups = groupByParent(data);
+		nodeRecuise(tree, root, groups, "");
         return root;
     }
 

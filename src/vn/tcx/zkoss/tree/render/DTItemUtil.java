@@ -33,47 +33,43 @@ public class DTItemUtil {
 	}
 
 	public static DTRow generateDTRow(String[] data, Tree tree, int index) {
-		if (data[1].isEmpty()) {
+		DTRow row = new DTRow();
 
-			DTRow row = new DTRow();
+		row.setProperty(DTRowKeys.ROW_EDITABLE, false);
 
-			row.setProperty(DTRowKeys.ROW_EDITABLE, false);
-
-            if (tree.getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
-            	DTCell checkBoxCell = new DTCell();
-            	checkBoxCell.setProperty(DTCellKeys.WIDTH, "30px");
-            	row.addCell(checkBoxCell);
-            }
-            if (tree.getAttribute(DTTreeKeys.HAS_NO_COLUMN.toString()).equals(true)) {
-            	DTCell noCell = new DTCell("" + (index + 1));
-            	noCell.setProperty(DTCellKeys.WIDTH, "30px");
-            	row.addCell(noCell);
-            }
+        if (tree.getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
+        	DTCell checkBoxCell = new DTCell();
+        	checkBoxCell.setProperty(DTCellKeys.WIDTH, "30px");
+        	row.addCell(checkBoxCell);
+        }
+        if (tree.getAttribute(DTTreeKeys.HAS_NO_COLUMN.toString()).equals(true)) {
+        	DTCell noCell = new DTCell("" + (index + 1));
+        	noCell.setProperty(DTCellKeys.WIDTH, "30px");
+        	row.addCell(noCell);
+        }
 
 
-            for (int j = 2; j < data.length; j++) {
-            	DTCell cell = new DTCell(data[j]);
-            	String size = "100%";
-            	if (j == 2 && countCalculationColumns(tree) > 0) {
-            		size = "85%";
-            	}
-            	cell.setProperty(DTCellKeys.WIDTH, size);
-            	row.addCell(cell);
-            }
+        for (int j = 2; j < data.length; j++) {
+        	DTCell cell = new DTCell(data[j]);
+        	String size = "100%";
+        	if (j == 2 && countCalculationColumns(tree) > 0) {
+        		size = "85%";
+        	}
+        	cell.setProperty(DTCellKeys.WIDTH, size);
+        	row.addCell(cell);
+        }
 
-            for (int i = 0; i < countCalculationColumns(tree); i++) {
-            	DTCell cell = new DTCell();
-            	cell.setProperty(DTCellKeys.WIDTH, "100%");
-            	cell.setProperty(DTCellKeys.CALC_EXPRESSION, getCalculationTreecol(tree)[i]);
-            	row.addCell(cell);
-            }
+        for (int i = 0; i < countCalculationColumns(tree); i++) {
+        	DTCell cell = new DTCell();
+        	cell.setProperty(DTCellKeys.WIDTH, "100%");
+        	cell.setProperty(DTCellKeys.CALC_EXPRESSION, getCalculationTreecol(tree)[i]);
+        	row.addCell(cell);
+        }
 
-        	row.setProperty(DTRowKeys.ROW_ID, data[0]);
-        	row.setProperty(DTRowKeys.ROW_PARENT_ID, data[1]);
+    	row.setProperty(DTRowKeys.ROW_ID, data[0]);
+    	row.setProperty(DTRowKeys.ROW_PARENT_ID, data[1]);
 
-            return row;
-		}
-		return null;
+        return row;
 	}
 
 	private static Treecol[] getCalculationTreecol(Tree tree) {
