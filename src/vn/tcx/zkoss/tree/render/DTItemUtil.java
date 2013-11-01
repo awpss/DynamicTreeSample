@@ -187,7 +187,7 @@ public class DTItemUtil {
 	public static String[] createEmptyDataBaseOnColumns(Tree tree) {
 		String[] data = new String[2];
 		if (countNormalColumns(tree) > 2) {
-			data = new String[countNormalColumns(tree)];
+			data = new String[countNormalColumns(tree) + countCalculationColumns(tree)];
 		}
     	for (int i = 0; i < data.length; i++) {
     		data[i] = "";

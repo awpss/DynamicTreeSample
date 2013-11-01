@@ -40,8 +40,6 @@ public class DTTreeManagerUtil {
 			lst.add(d);
 		}
 
-		System.out.println(ret.size());
-
 		return ret;
 	}
 
