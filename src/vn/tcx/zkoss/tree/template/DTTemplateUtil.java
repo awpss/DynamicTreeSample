@@ -31,7 +31,12 @@ public class DTTemplateUtil {
 				if (data.equals("+") || (data.equals("-") || data.equals("*") || data.equals("/"))) {
 					calcExp += " " + data + " ";
 				} else {
-					calcExp += cells.get(Integer.parseInt(data)).getValue().replaceAll(",", ".");
+
+					if (data.indexOf("#") >= 0) {
+						calcExp += cells.get(Integer.parseInt(data.substring(1))).getValue().replaceAll(",", ".");
+					} else {
+						calcExp += data;
+					}
 				}
 			}
 			DTPoland calculator = new DTPoland();
