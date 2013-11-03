@@ -6,6 +6,9 @@ import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
+import vn.tcx.zkoss.tree.constant.DTRowKeys;
+import vn.tcx.zkoss.tree.model.DTNode;
+
 public class DTEnterKeyEventListener implements EventListener<KeyEvent> {
 
     private Treeitem treeItem;
@@ -20,7 +23,9 @@ public class DTEnterKeyEventListener implements EventListener<KeyEvent> {
     }
 
     public void onEvent(KeyEvent event) throws Exception {
-    	new DTUpdateEventListener(treeItem, treeRow, treeCell).onEvent(event);
+    	if (((DTNode)treeItem.getValue()).getData().getProperty(DTRowKeys.ROW_EDITABLE).equals(true)) {
+    		new DTUpdateEventListener(treeItem, treeRow, treeCell).onEvent(event);
+    	}
     	event.stopPropagation();
     }
 

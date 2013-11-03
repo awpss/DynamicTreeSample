@@ -1,6 +1,12 @@
 package vn.tcx.zkoss.tree.render;
 
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.CheckEvent;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.event.SelectEvent;
+import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.TreeitemRenderer;
@@ -47,16 +53,18 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
 
             row.appendChild(cells[i]);
         }
+
         item.appendChild(row);
     	if (item.getTree().getAttribute(DTTreeKeys.READ_ONLY.toString()).equals(false)) {
 
     		if (item.getTree().getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
-    	        item.setCheckable(true);
+//    	        item.setCheckable(true);
     		}
 
 	        DTItemUtil.setDragDrop(item, row);
 	        DTItemUtil.setPrepareForFirstShow(item);
     	}
+
     	item.setOpen(data.isOpen());
 
     }
