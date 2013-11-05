@@ -61,14 +61,14 @@ public class DTTreeManagerUtil {
 
 	}
 
-	protected static DTNode parseDataToRow(final Tree tree, final List<String[]> data) {
+	public static DTNode parseDataToRow(final Tree tree, final List<String[]> data) {
 		DTNode root = new DTNode(null, new DTNodeCollection(), true);
 		Map<String, List<String[]>> groups = groupByParent(data);
 		nodeRecuise(tree, root, groups, "");
         return root;
     }
 
-	protected static Treecols getTreecolsFromDTColumn(List<DTColumn> cols) {
+	public static Treecols getTreecolsFromDTColumn(List<DTColumn> cols) {
     	Treecols treeCols = new Treecols();
     	treeCols.setSizable(true);
 
@@ -90,7 +90,7 @@ public class DTTreeManagerUtil {
     	tree.setModel(new DefaultTreeModel<DTRow>(parseDataToRow(tree, data)));
     }
 
-    protected static void buildColumns(Tree tree, List<DTColumn> cols) {
+    public static void buildColumns(Tree tree, List<DTColumn> cols) {
         if (cols == null) {
         	createTreeColumns(tree, DTTreeFixedData.getColumns());
         } else {
@@ -98,7 +98,7 @@ public class DTTreeManagerUtil {
         }
     }
 
-	protected static void buildItems(Tree tree, List<String[]> data) {
+	public static void buildItems(Tree tree, List<String[]> data) {
         if (data == null) {
         	createTreeModelFromListStringArray(tree, DTTreeFixedData.getFixedData());
         } else {
