@@ -14,6 +14,7 @@ import org.zkoss.zul.Treecols;
 
 import vn.tcx.zkoss.tree.comparetor.DTItemComparetor;
 import vn.tcx.zkoss.tree.constant.DTColumnKeys;
+import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
 import vn.tcx.zkoss.tree.model.DTColumn;
 import vn.tcx.zkoss.tree.model.DTNode;
@@ -23,34 +24,37 @@ import vn.tcx.zkoss.tree.render.DTItemUtil;
 
 public class DTTreeManagerUtil {
 
-	private static Map<String, List<String[]>> groupByParent(List<String[]> data) {
-		Map<String, List<String[]>> ret = new HashMap<String, List<String[]>>();
+	private static Map<String, List<DTRow>> groupByParent(List<DTRow> data) {
+		Map<String, List<DTRow>> ret = new HashMap<String, List<DTRow>>();
 
 		// sort by parentId
 		Collections.sort(data, new DTItemComparetor());
 
 		// group by parentId
-		for (String[] d : data) {
-			List<String[]> lst = null;
-			if (!ret.containsKey(d[1])) {
-				lst = new ArrayList<String[]>();
-				ret.put(d[1], lst);
+		for (DTRow d : data) {
+			List<DTRow> lst = null;
+			if (!ret.containsKey((String) d.getProperty(DTRowKeys.ROW_PARENT_ID))) {
+				lst = new ArrayList<DTRow>();
+				ret.put((String)d.getProperty(DTRowKeys.ROW_PARENT_ID), lst);
 			}
-			lst = ret.get(d[1]);
+			lst = ret.get((String)d.getProperty(DTRowKeys.ROW_PARENT_ID));
 			lst.add(d);
 		}
-
 		return ret;
 	}
 
-	private static void nodeRecuise(Tree tree, DTNode node, Map<String, List<String[]>> groups, String key) {
-
+	private static void nodeRecuise(Tree tree, DTNode node, Map<String, List<DTRow>> groups, String key) {
+		for (String g : groups.keySet()) {
+			System.out.println("A: " + g);
+		}
 		if (groups.containsKey(key)) {
-			List<String[]> childs = groups.get(key);
-			for (String[] child : childs) {
+			System.out.println("LENGTH: " + groups.size());
+
+			List<DTRow> childs = groups.get(key);
+			for (DTRow child : childs) {
 				DTRow row = DTItemUtil.generateDTRow(child, tree, 0);
 				DTNode childNode = new DTNode(row, new DTNodeCollection());
-				nodeRecuise(tree, childNode, groups, child[0]);
+				nodeRecuise(tree, childNode, groups, (String)child.getProperty(DTRowKeys.ROW_ID));
 				if (childNode.getChildren().size() > 0) {
 					childNode.setOpen(true);
 				}
@@ -61,9 +65,9 @@ public class DTTreeManagerUtil {
 
 	}
 
-	public static DTNode parseDataToRow(final Tree tree, final List<String[]> data) {
+	public static DTNode parseDataToRow(final Tree tree, final List<DTRow> data) {
 		DTNode root = new DTNode(null, new DTNodeCollection(), true);
-		Map<String, List<String[]>> groups = groupByParent(data);
+		Map<String, List<DTRow>> groups = groupByParent(data);
 		nodeRecuise(tree, root, groups, "");
         return root;
     }
@@ -86,7 +90,7 @@ public class DTTreeManagerUtil {
     	return treeCols;
     }
 
-    private static void createTreeModelFromListStringArray(Tree tree, List<String[]> data) {
+    private static void createTreeModelFromListStringArray(Tree tree, List<DTRow> data) {
     	tree.setModel(new DefaultTreeModel<DTRow>(parseDataToRow(tree, data)));
     }
 
@@ -98,12 +102,12 @@ public class DTTreeManagerUtil {
         }
     }
 
-	public static void buildItems(Tree tree, List<String[]> data) {
-        if (data == null) {
-        	createTreeModelFromListStringArray(tree, DTTreeFixedData.getFixedData());
-        } else {
+	public static void buildItems(Tree tree, List<DTRow> data) {
+//        if (data == null) {
+//        	createTreeModelFromListStringArray(tree, DTTreeFixedData.getFixedData());
+//        } else {
         	createTreeModelFromListStringArray(tree, data);
-        }
+//        }
     }
 
 	private static void createTreeColumns(Tree tree, List<DTColumn> cols) {
@@ -128,12 +132,12 @@ public class DTTreeManagerUtil {
 		tree.appendChild(treeCols);
 	}
 
-	private static void recreateTree(Tree tree, List<DTColumn> cols, List<String[]> data) {
+	private static void recreateTree(Tree tree, List<DTColumn> cols, List<DTRow> data) {
 		buildColumns(tree, cols);
 		buildItems(tree, data);
 	}
 
-    public static void setReadonly(Tree tree, List<DTColumn> cols, List<String[]> data, boolean bool) {
+    public static void setReadonly(Tree tree, List<DTColumn> cols, List<DTRow> data, boolean bool) {
     	recreateTree(tree, cols, data);
 		tree.setAttribute(DTTreeKeys.READ_ONLY.toString(), !bool);
 		tree.setCheckmark(bool);
@@ -141,13 +145,13 @@ public class DTTreeManagerUtil {
     	tree.setModel(tree.getModel());
     }
 
-    public static void setMultiple(Tree tree, List<DTColumn> cols, List<String[]> data, boolean bool) {
+    public static void setMultiple(Tree tree, List<DTColumn> cols, List<DTRow> data, boolean bool) {
     	recreateTree(tree, cols, data);
         tree.setAttribute(DTTreeKeys.CHECKABLE.toString(), bool);
     	tree.setModel(tree.getModel());
     }
 
-    public static void setNoColumn(Tree tree, List<DTColumn> cols, List<String[]> data, boolean bool) {
+    public static void setNoColumn(Tree tree, List<DTColumn> cols, List<DTRow> data, boolean bool) {
     	recreateTree(tree, cols, data);
     	tree.setAttribute(DTTreeKeys.HAS_NO_COLUMN.toString(), bool);
     	tree.setModel(tree.getModel());

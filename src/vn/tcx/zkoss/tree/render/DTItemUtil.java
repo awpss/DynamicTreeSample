@@ -32,7 +32,7 @@ public class DTItemUtil {
         }
 	}
 
-	public static DTRow generateDTRow(String[] data, Tree tree, int index) {
+	public static DTRow generateDTRow(DTRow data, Tree tree, int index) {
 		DTRow row = new DTRow();
 
 		row.setProperty(DTRowKeys.ROW_EDITABLE, false);
@@ -49,8 +49,8 @@ public class DTItemUtil {
         }
 
 
-        for (int j = 2; j < data.length; j++) {
-        	DTCell cell = new DTCell(data[j]);
+        for (int j = 0; j < data.getCells().size(); j++) {
+        	DTCell cell = data.getCell(j);
         	String size = "100%";
         	if (j == 2 && countCalculationColumns(tree) > 0) {
         		size = "85%";
@@ -66,9 +66,8 @@ public class DTItemUtil {
         	row.addCell(cell);
         }
 
-    	row.setProperty(DTRowKeys.ROW_ID, data[0]);
-    	row.setProperty(DTRowKeys.ROW_PARENT_ID, data[1]);
-
+    	row.setProperty(DTRowKeys.ROW_ID, (String) data.getProperty(DTRowKeys.ROW_ID));
+    	row.setProperty(DTRowKeys.ROW_PARENT_ID, (String) data.getProperty(DTRowKeys.ROW_PARENT_ID));
         return row;
 	}
 
@@ -184,15 +183,13 @@ public class DTItemUtil {
 		return size;
 	}
 
-	public static String[] createEmptyDataBaseOnColumns(Tree tree) {
-		String[] data = new String[2];
-		if (countNormalColumns(tree) > 2) {
-			data = new String[countNormalColumns(tree) + countCalculationColumns(tree)];
-		}
-    	for (int i = 0; i < data.length; i++) {
-    		data[i] = "";
+	public static DTRow createEmptyDataBaseOnColumns(Tree tree) {
+		DTRow row = new DTRow();
+
+		for (int i = 0; i < countColumns(tree); i++) {
+    		row.addCell(new DTCell());
     	}
-    	return data;
+    	return row;
 	}
 
 	public static DTRow getDTRowInTreeitem(Treeitem item) {

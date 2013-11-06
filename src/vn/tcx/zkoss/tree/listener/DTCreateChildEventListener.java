@@ -28,14 +28,14 @@ public class DTCreateChildEventListener implements EventListener<Event> {
 
     public void onEvent(Event event) throws Exception {
     	DTNode selectedTreeNode = treeItem.getValue();
-    	String[] data = DTItemUtil.createEmptyDataBaseOnColumns(treeItem.getTree());
+    	DTRow data = DTItemUtil.createEmptyDataBaseOnColumns(treeItem.getTree());
 
     	DTRow row = DTItemUtil.generateDTRow(data, treeItem.getTree(), treeItem.getIndex());
 		row.setProperty(DTRowKeys.ROW_EDITABLE, true);
         DTNode newNode = new DTNode(row, null);
         selectedTreeNode.getChildren().add(newNode);
         treeItem.setOpen(true);
-
+        selectedTreeNode.setOpen(true);
     }
 
 }

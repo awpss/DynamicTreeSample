@@ -28,7 +28,7 @@ public class DTCreateEventListener implements EventListener<Event> {
 
     public void onEvent(Event event) throws Exception {
     	DTNode selectedTreeNode = treeItem.getValue();
-    	String[] data = DTItemUtil.createEmptyDataBaseOnColumns(treeItem.getTree());
+    	DTRow data = DTItemUtil.createEmptyDataBaseOnColumns(treeItem.getTree());
     	DTRow row = DTItemUtil.generateDTRow(data, treeItem.getTree(), treeItem.getIndex());
 		row.setProperty(DTRowKeys.ROW_EDITABLE, true);
 
@@ -38,7 +38,6 @@ public class DTCreateEventListener implements EventListener<Event> {
         } else {
         	selectedTreeNode.getParent().insert(newNode, treeItem.getIndex());
         }
-
         // Update stt
     }
 

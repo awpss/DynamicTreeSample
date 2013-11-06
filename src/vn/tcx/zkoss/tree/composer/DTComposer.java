@@ -7,6 +7,7 @@ import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Tree;
 
 import vn.tcx.zkoss.tree.model.DTColumn;
+import vn.tcx.zkoss.tree.model.DTRow;
 
 public class DTComposer extends GenericForwardComposer<Component> {
 
@@ -15,7 +16,7 @@ public class DTComposer extends GenericForwardComposer<Component> {
 	 */
 	private static final long serialVersionUID = 7516361432087848343L;
 	protected Tree tcxTree;
-    protected List<String[]> data = null;
+    protected List<DTRow> data = null;
     protected List<DTColumn> cols = null;
 
     @Override
