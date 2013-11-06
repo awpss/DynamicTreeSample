@@ -19,10 +19,10 @@ import vn.tcx.zkoss.tree.model.DTRow;
 
 public class DTItemUtil {
 
-	public static void setDragDrop(Treeitem item, Treerow row) {
+	public static void setDragDrop(DTDropRowListener listener, Treeitem item, Treerow row) {
         row.setDroppable("true");
         row.setDraggable("true");
-        row.addEventListener(Events.ON_DROP, new DTDropRowListener(item));
+        row.addEventListener(Events.ON_DROP, listener);
 	}
 
 	public static void setPrepareForFirstShow(Treeitem item) {

@@ -16,7 +16,15 @@ public class DTDropRowListener implements EventListener<DropEvent> {
         this.droppedItem = treeItem;
     }
 
-    @Override
+    public Treeitem getDroppedItem() {
+		return droppedItem;
+	}
+
+	public void setDroppedItem(Treeitem droppedItem) {
+		this.droppedItem = droppedItem;
+	}
+
+	@Override
     public void onEvent(DropEvent event) throws Exception {
         // front end
     	Component dragged = event.getDragged();
