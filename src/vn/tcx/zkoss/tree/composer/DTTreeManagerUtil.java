@@ -44,11 +44,7 @@ public class DTTreeManagerUtil {
 	}
 
 	private static void nodeRecuise(Tree tree, DTNode node, Map<String, List<DTRow>> groups, String key) {
-		for (String g : groups.keySet()) {
-			System.out.println("A: " + g);
-		}
 		if (groups.containsKey(key)) {
-			System.out.println("LENGTH: " + groups.size());
 
 			List<DTRow> childs = groups.get(key);
 			for (DTRow child : childs) {

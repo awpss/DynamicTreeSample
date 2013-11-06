@@ -89,8 +89,6 @@ public class DTTemplateUtil {
             	}
         	}
             ret[i++] = cell;
-            System.out.println(ret.length + " " + data.getData().getCells().size() + " " + cell);
-
         }
 
         return ret;
