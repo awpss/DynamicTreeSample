@@ -20,8 +20,36 @@ public class DTUpdateEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
     private Treerow treeRow;
-    @SuppressWarnings("unused")
     private Treecell treeCell;
+
+
+    public Treeitem getTreeItem() {
+		return treeItem;
+	}
+
+	public void setTreeItem(Treeitem treeItem) {
+		this.treeItem = treeItem;
+	}
+
+	public Treerow getTreeRow() {
+		return treeRow;
+	}
+
+	public void setTreeRow(Treerow treeRow) {
+		this.treeRow = treeRow;
+	}
+
+	public Treecell getTreeCell() {
+		return treeCell;
+	}
+
+	public void setTreeCell(Treecell treeCell) {
+		this.treeCell = treeCell;
+	}
+
+	public DTUpdateEventListener() {
+
+    }
 
     public DTUpdateEventListener(Treeitem treeItem, Treerow treeRow,
             Treecell treeCell) {

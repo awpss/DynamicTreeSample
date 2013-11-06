@@ -28,9 +28,11 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
 	 */
 	private static final long serialVersionUID = 843814938783210868L;
 
+	private DTUpdateEventListener updateListener;
 
-	public DTMenuPopup() {
+	public DTMenuPopup(DTUpdateEventListener updatelistener) {
     	super();
+		this.updateListener = updatelistener;
     }
 
     public void createBaseMenu(Treeitem treeItem, Treerow treeRow, Treecell treeCell) {
@@ -38,9 +40,12 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
     	DTRow row = ((DTNode) treeItem.getValue()).getData();
     	if (row.getProperty(DTRowKeys.ROW_EDITABLE) != null) {
         	if (row.getProperty(DTRowKeys.ROW_EDITABLE).equals(true)) {
-            	Map<DTListenerKeys, EventListener<Event>> updateListener = new HashMap<DTListenerKeys, EventListener<Event>>();
-            	updateListener.put(DTListenerKeys.ON_CLICK, new DTUpdateEventListener(treeItem, treeRow, treeCell));
-            	Menuitem update = DTMenuItemUtil.createMenuItem("Cập nhập dữ liệu", updateListener);
+            	Map<DTListenerKeys, EventListener<Event>> updateListenerMap = new HashMap<DTListenerKeys, EventListener<Event>>();
+            	updateListener.setTreeCell(treeCell);
+            	updateListener.setTreeRow(treeRow);
+            	updateListener.setTreeItem(treeItem);
+            	updateListenerMap.put(DTListenerKeys.ON_CLICK, updateListener);
+            	Menuitem update = DTMenuItemUtil.createMenuItem("Cập nhập dữ liệu", updateListenerMap);
             	addMenuItem(update);
         	}
     	}
@@ -78,9 +83,17 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
 
 
 	public Menupopup createMenu(Treeitem item, Treerow row, Treecell cell) {
-		DTMenuPopup m = new DTMenuPopup();
+		DTMenuPopup m = new DTMenuPopup(new DTUpdateExtends());
 		m.createBaseMenu(item, row, cell);
 		return (Menupopup) m;
 	}
 
+
+	public class DTUpdateExtends extends DTUpdateEventListener {
+		@Override
+		public void onEvent(Event event) throws Exception {
+			// TODO Auto-generated method stub
+			super.onEvent(event);
+		}
+	}
 }

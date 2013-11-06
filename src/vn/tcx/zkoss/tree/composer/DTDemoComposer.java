@@ -3,12 +3,14 @@ package vn.tcx.zkoss.tree.composer;
 import java.util.ArrayList;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
 
 import vn.tcx.zkoss.tree.constant.DTColumnKeys;
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
 import vn.tcx.zkoss.tree.listener.DTSelectedEventListener;
+import vn.tcx.zkoss.tree.listener.DTUpdateEventListener;
 import vn.tcx.zkoss.tree.menu.DTMenuPopup;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTColumn;
@@ -64,8 +66,17 @@ public class DTDemoComposer extends DTComposer {
     	tcxTree.addEventListener(Events.ON_SELECT, new DTSelectedEventListener());
 
     	// Row render
-        tcxTree.setItemRenderer(new DTItemRender(new DTMenuPopup()));
+        tcxTree.setItemRenderer(new DTItemRender(new DTMenuPopup(new DTUpdateExtends())));
 
 	}
+
+	public class DTUpdateExtends extends DTUpdateEventListener {
+		@Override
+		public void onEvent(Event event) throws Exception {
+			// TODO Auto-generated method stub
+			super.onEvent(event);
+		}
+	}
+
 
 }
