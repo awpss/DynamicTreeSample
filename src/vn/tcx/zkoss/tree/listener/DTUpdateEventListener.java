@@ -18,9 +18,9 @@ import vn.tcx.zkoss.tree.model.DTRow;
 
 public class DTUpdateEventListener implements EventListener<Event> {
 
-    private Treeitem treeItem;
-    private Treerow treeRow;
-    private Treecell treeCell;
+    Treeitem treeItem;
+    Treerow treeRow;
+    Treecell treeCell;
 
 
     public Treeitem getTreeItem() {

@@ -9,9 +9,10 @@ import org.zkoss.zk.ui.event.Events;
 import vn.tcx.zkoss.tree.constant.DTColumnKeys;
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
+import vn.tcx.zkoss.tree.listener.DTEnterKeyEventListener;
 import vn.tcx.zkoss.tree.listener.DTSelectedEventListener;
-import vn.tcx.zkoss.tree.listener.DTUpdateEventListener;
 import vn.tcx.zkoss.tree.menu.DTMenuPopup;
+import vn.tcx.zkoss.tree.menu.DTUpdateMenu;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTColumn;
 import vn.tcx.zkoss.tree.model.DTRow;
@@ -66,17 +67,24 @@ public class DTDemoComposer extends DTComposer {
     	tcxTree.addEventListener(Events.ON_SELECT, new DTSelectedEventListener());
 
     	// Row render
-        tcxTree.setItemRenderer(new DTItemRender(new DTMenuPopup(new DTUpdateExtends())));
+        tcxTree.setItemRenderer(new DTItemRender(new DTMenuPopup(new DTUpdateExtends()), new DTEnterExtends()));
 
 	}
 
-	public class DTUpdateExtends extends DTUpdateEventListener {
+	// For event
+	public class DTUpdateExtends extends DTUpdateMenu {
 		@Override
 		public void onEvent(Event event) throws Exception {
-			// TODO Auto-generated method stub
 			super.onEvent(event);
 		}
 	}
 
+	// For enter key
+	public class DTEnterExtends extends DTEnterKeyEventListener {
+		@Override
+		public void onEvent(Event event) throws Exception {
+			super.onEvent(event);
+		}
+	}
 
 }

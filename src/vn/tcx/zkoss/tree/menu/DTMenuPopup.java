@@ -17,7 +17,6 @@ import vn.tcx.zkoss.tree.listener.DTCreateChildEventListener;
 import vn.tcx.zkoss.tree.listener.DTCreateEventListener;
 import vn.tcx.zkoss.tree.listener.DTModifyEventListener;
 import vn.tcx.zkoss.tree.listener.DTRemoveEventListener;
-import vn.tcx.zkoss.tree.listener.DTUpdateEventListener;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
 
@@ -28,9 +27,9 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
 	 */
 	private static final long serialVersionUID = 843814938783210868L;
 
-	private DTUpdateEventListener updateListener;
+	private DTUpdateMenu updateListener;
 
-	public DTMenuPopup(DTUpdateEventListener updatelistener) {
+	public DTMenuPopup(DTUpdateMenu updatelistener) {
     	super();
 		this.updateListener = updatelistener;
     }
@@ -83,17 +82,9 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
 
 
 	public Menupopup createMenu(Treeitem item, Treerow row, Treecell cell) {
-		DTMenuPopup m = new DTMenuPopup(new DTUpdateExtends());
+		DTMenuPopup m = new DTMenuPopup(this.updateListener);
 		m.createBaseMenu(item, row, cell);
 		return (Menupopup) m;
 	}
 
-
-	public class DTUpdateExtends extends DTUpdateEventListener {
-		@Override
-		public void onEvent(Event event) throws Exception {
-			// TODO Auto-generated method stub
-			super.onEvent(event);
-		}
-	}
 }

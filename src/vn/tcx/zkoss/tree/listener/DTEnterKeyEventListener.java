@@ -1,30 +1,30 @@
 package vn.tcx.zkoss.tree.listener;
 
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.KeyEvent;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
+import vn.tcx.zkoss.tree.menu.DTUpdateMenu;
 import vn.tcx.zkoss.tree.model.DTNode;
 
-public class DTEnterKeyEventListener implements EventListener<KeyEvent> {
+public class DTEnterKeyEventListener extends DTUpdateMenu {
 
-    private Treeitem treeItem;
-    private Treerow treeRow;
-    private Treecell treeCell;
+    public DTEnterKeyEventListener() {
+
+    }
 
     public DTEnterKeyEventListener(Treeitem treeItem, Treerow treeRow,
             Treecell treeCell) {
-        this.treeItem = treeItem;
-        this.treeRow = treeRow;
-        this.treeCell = treeCell;
+        setTreeItem(treeItem);
+        setTreeCell(treeCell);
+        setTreeRow(treeRow);
     }
 
-    public void onEvent(KeyEvent event) throws Exception {
-    	if (((DTNode)treeItem.getValue()).getData().getProperty(DTRowKeys.ROW_EDITABLE).equals(true)) {
-    		new DTUpdateEventListener(treeItem, treeRow, treeCell).onEvent(event);
+    public void onEvent(Event event) throws Exception {
+    	if (((DTNode)getTreeItem().getValue()).getData().getProperty(DTRowKeys.ROW_EDITABLE).equals(true)) {
+    		super.onEvent(event);
     	}
     	event.stopPropagation();
     }

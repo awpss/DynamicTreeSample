@@ -1,12 +1,6 @@
 package vn.tcx.zkoss.tree.render;
 
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.CheckEvent;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
-import org.zkoss.zk.ui.event.SelectEvent;
-import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.TreeitemRenderer;
@@ -25,9 +19,11 @@ import vn.tcx.zkoss.tree.template.DTNonEditable;
 public class DTItemRender implements TreeitemRenderer<DTNode> {
 
 	DTMenu contextMenu;
+	DTEnterKeyEventListener enterEvent;
 
-	public DTItemRender(DTMenu menu) {
+	public DTItemRender(DTMenu menu, DTEnterKeyEventListener enterEvent) {
 		contextMenu = menu;
+		this.enterEvent = enterEvent;
 	}
 
     @Override
@@ -47,8 +43,11 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
         for (int i = 0; i < cells.length; i++) {
         	if (item.getTree().getAttribute(DTTreeKeys.READ_ONLY.toString()).equals(false)) {
         		cells[i].setContext(contextMenu.createMenu(item, row, cells[i]));
+            	enterEvent.setTreeCell(cells[i]);
+            	enterEvent.setTreeItem(item);
+            	enterEvent.setTreeRow(row);
             	item.addEventListener(Events.ON_DOUBLE_CLICK, new DTDoubleClickMouseEventListener(item, row, cells[i]));
-            	item.addEventListener(Events.ON_OK, new DTEnterKeyEventListener(item, row, cells[i]));
+            	item.addEventListener(Events.ON_OK, enterEvent);
         	}
 
             row.appendChild(cells[i]);
