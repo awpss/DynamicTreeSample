@@ -2,6 +2,7 @@ package vn.tcx.zkoss.tree.render;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treecol;
 import org.zkoss.zul.Treecols;
@@ -183,11 +184,19 @@ public class DTItemUtil {
 		return size;
 	}
 
-	public static DTRow createEmptyDataBaseOnColumns(Tree tree) {
+	public static DTRow createEmptyDataBaseOnColumns(Tree tree, Treeitem item) {
 		DTRow row = new DTRow();
 
+		DTRow bRow = getDTRowInTreeitem(item);
+
 		for (int i = 0; i < countColumns(tree); i++) {
-    		row.addCell(new DTCell());
+			DTCell cell = new DTCell();
+			if (bRow.getCell(i).getProperty(DTCellKeys.INPUT_TYPE) != null
+					&& bRow.getCell(i).getProperty(DTCellKeys.INPUT_TYPE).equals(Combobox.class)) {
+				cell.setProperty(DTCellKeys.COMPONENT_DATA, bRow.getCell(i).getProperty(DTCellKeys.COMPONENT_DATA));
+				cell.setProperty(DTCellKeys.INPUT_TYPE, bRow.getCell(i).getProperty(DTCellKeys.INPUT_TYPE));
+			}
+    		row.addCell(cell);
     	}
     	return row;
 	}

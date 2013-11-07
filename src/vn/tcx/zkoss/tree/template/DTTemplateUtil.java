@@ -64,7 +64,7 @@ public class DTTemplateUtil {
     			cell.appendChild(new Label(""));
     		} else {
             	if (mode == NONEDITABLE) {
-                    cell.appendChild(new Label(c.getValue()));
+                    cell.appendChild(new Label(c.getText()));
             	} else {
             		if (c.getProperty(DTCellKeys.INPUT_TYPE) != null) {
             			Class<Component> cls = (Class<Component>) c.getProperty(DTCellKeys.INPUT_TYPE);

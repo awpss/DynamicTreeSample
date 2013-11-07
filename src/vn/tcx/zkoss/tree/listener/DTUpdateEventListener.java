@@ -71,9 +71,11 @@ public class DTUpdateEventListener implements EventListener<Event> {
     			if (cc instanceof Label) {
     			} else if (cc instanceof Combobox) {
     				cells.get(i).setProperty(DTCellKeys.SELECTED_ITEM, ((Combobox) cc).getSelectedItem().getValue());
-     				cells.get(i).setValue((String)((Combobox) cc).getSelectedItem().getLabel());
-     			} else if (cc instanceof Textbox) {
+     				cells.get(i).setValue((String)((Combobox) cc).getSelectedItem().getValue());
+     				cells.get(i).setText((String)((Combobox) cc).getSelectedItem().getLabel());
+    			} else if (cc instanceof Textbox) {
         			cells.get(i).setValue(((Textbox)cc).getValue());
+        			cells.get(i).setText(((Textbox)cc).getValue());
     			}
     			i++;
     		}

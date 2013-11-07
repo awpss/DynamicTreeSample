@@ -15,15 +15,25 @@ import vn.tcx.zkoss.tree.constant.DTCellKeys;
 public class DTCell {
 
     private String value;
+    private String text;
     private Map<DTCellKeys, Object> properties;
 
     public DTCell() { }
 
     public DTCell(String value) {
         this.value = value;
+        this.text = value;
     }
 
-    public DTCell(String value, Map<DTCellKeys, Object> properties) {
+    public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public DTCell(String value, Map<DTCellKeys, Object> properties) {
         this.value = value;
         this.properties = properties;
     }

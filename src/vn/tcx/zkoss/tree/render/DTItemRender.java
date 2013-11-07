@@ -56,15 +56,7 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
             	enterEvent.setTreeItem(item);
             	enterEvent.setTreeRow(row);
             	item.addEventListener(Events.ON_DOUBLE_CLICK, new DTDoubleClickMouseEventListener(item, row, cells[i]));
-            	item.addEventListener(Events.ON_OK, new DTEnterKeyEventListener(item, row, cells[i]));
-
-//            	for (Component c : cells[i].getChildren()) {
-//            		if (c instanceof Combobox) {
-//            			((Combobox) c).setSelectedIndex(1);
-//            			System.out.println(c);
-//            		}
-//            	}
-
+            	item.addEventListener(Events.ON_OK, (DTEnterKeyEventListener) enterEvent.clone());
         	}
 
             row.appendChild(cells[i]);

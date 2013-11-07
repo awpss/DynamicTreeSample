@@ -9,7 +9,7 @@ import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.menu.DTUpdateMenu;
 import vn.tcx.zkoss.tree.model.DTNode;
 
-public class DTEnterKeyEventListener extends DTUpdateMenu {
+public class DTEnterKeyEventListener extends DTUpdateMenu implements Cloneable {
 
     public DTEnterKeyEventListener() {
 
@@ -27,6 +27,10 @@ public class DTEnterKeyEventListener extends DTUpdateMenu {
     		super.onEvent(event);
     	}
     	event.stopPropagation();
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+    	return super.clone();
     }
 
 }
