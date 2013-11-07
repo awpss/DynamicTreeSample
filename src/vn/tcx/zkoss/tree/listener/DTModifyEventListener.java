@@ -32,5 +32,4 @@ public class DTModifyEventListener implements EventListener<Event> {
 		selectedTreeNode.setData(row);
 		treeItem.getTree().setModel(treeItem.getTree().getModel());
     }
-
 }

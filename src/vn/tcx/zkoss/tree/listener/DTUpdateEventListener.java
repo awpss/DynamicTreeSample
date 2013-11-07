@@ -5,12 +5,14 @@ import java.util.List;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
 
+import vn.tcx.zkoss.tree.constant.DTCellKeys;
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTNode;
@@ -66,12 +68,17 @@ public class DTUpdateEventListener implements EventListener<Event> {
     	int i = 0;
     	for (Component cp : treeRow.getChildren()) {
     		for (Component cc : cp.getChildren()) {
-    			if (cc instanceof Label) i++;
-    			else {
-        			cells.get(i++).setValue(((Textbox)cc).getValue());
+    			if (cc instanceof Label) {
+    			} else if (cc instanceof Combobox) {
+    				cells.get(i).setProperty(DTCellKeys.SELECTED_ITEM, ((Combobox) cc).getSelectedItem().getValue());
+     				cells.get(i).setValue((String)((Combobox) cc).getSelectedItem().getLabel());
+     			} else if (cc instanceof Textbox) {
+        			cells.get(i).setValue(((Textbox)cc).getValue());
     			}
+    			i++;
     		}
     	}
+
     	row.setCells(cells);
 		row.setProperty(DTRowKeys.ROW_EDITABLE, false);
 		selectedTreeNode.setData(row);

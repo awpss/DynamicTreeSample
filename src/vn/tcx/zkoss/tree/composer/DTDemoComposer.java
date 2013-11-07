@@ -1,11 +1,14 @@
 package vn.tcx.zkoss.tree.composer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zul.Combobox;
 
+import vn.tcx.zkoss.tree.constant.DTCellKeys;
 import vn.tcx.zkoss.tree.constant.DTColumnKeys;
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
@@ -15,6 +18,7 @@ import vn.tcx.zkoss.tree.menu.DTMenuPopup;
 import vn.tcx.zkoss.tree.menu.DTUpdateMenu;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTColumn;
+import vn.tcx.zkoss.tree.model.DTComboboxModel;
 import vn.tcx.zkoss.tree.model.DTRow;
 import vn.tcx.zkoss.tree.render.DTItemRender;
 
@@ -42,7 +46,16 @@ public class DTDemoComposer extends DTComposer {
 
         DTRow row = new DTRow();
         row.addCell(new DTCell("a"));
-        row.addCell(new DTCell("s"));
+        row.addCell(new DTCell("s") {{
+        	setProperty(DTCellKeys.INPUT_TYPE, Combobox.class);
+        	List<DTComboboxModel> datas = new ArrayList<DTComboboxModel>();
+        	datas.add(new DTComboboxModel("1", "Gia tri 1"));
+        	datas.add(new DTComboboxModel("2", "Gia tri 2"));
+        	datas.add(new DTComboboxModel("3", "Gia tri 3"));
+        	datas.add(new DTComboboxModel("4", "Gia tri 4"));
+        	setProperty(DTCellKeys.COMPONENT_DATA, datas);
+        }});
+
         row.setProperty(DTRowKeys.ROW_ID, "1");
         row.setProperty(DTRowKeys.ROW_PARENT_ID, "");
 

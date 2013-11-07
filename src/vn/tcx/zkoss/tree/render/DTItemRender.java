@@ -1,6 +1,8 @@
 package vn.tcx.zkoss.tree.render;
 
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.TreeitemRenderer;
@@ -54,7 +56,15 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
             	enterEvent.setTreeItem(item);
             	enterEvent.setTreeRow(row);
             	item.addEventListener(Events.ON_DOUBLE_CLICK, new DTDoubleClickMouseEventListener(item, row, cells[i]));
-            	item.addEventListener(Events.ON_OK, enterEvent);
+            	item.addEventListener(Events.ON_OK, new DTEnterKeyEventListener(item, row, cells[i]));
+
+//            	for (Component c : cells[i].getChildren()) {
+//            		if (c instanceof Combobox) {
+//            			((Combobox) c).setSelectedIndex(1);
+//            			System.out.println(c);
+//            		}
+//            	}
+
         	}
 
             row.appendChild(cells[i]);
