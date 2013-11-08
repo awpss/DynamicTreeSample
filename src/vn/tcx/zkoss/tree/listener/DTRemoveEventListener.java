@@ -8,13 +8,15 @@ import org.zkoss.zul.Treerow;
 
 import vn.tcx.zkoss.tree.model.DTNode;
 
-public class DTRemoveEventListener implements EventListener<Event> {
+public class DTRemoveEventListener implements EventListener<Event>, Cloneable {
 
     private Treeitem treeItem;
-    @SuppressWarnings("unused")
     private Treerow treeRow;
-    @SuppressWarnings("unused")
     private Treecell treeCell;
+
+    public DTRemoveEventListener() {
+
+    }
 
     public DTRemoveEventListener(Treeitem treeItem, Treerow treeRow,
             Treecell treeCell) {
@@ -31,5 +33,31 @@ public class DTRemoveEventListener implements EventListener<Event> {
 		selectedTreeNode.removeFromParent();
 
     }
+
+	public Treeitem getTreeItem() {
+		return treeItem;
+	}
+
+	public void setTreeItem(Treeitem treeItem) {
+		this.treeItem = treeItem;
+	}
+
+	public Treerow getTreeRow() {
+		return treeRow;
+	}
+
+	public void setTreeRow(Treerow treeRow) {
+		this.treeRow = treeRow;
+	}
+
+	public Treecell getTreeCell() {
+		return treeCell;
+	}
+
+	public void setTreeCell(Treecell treeCell) {
+		this.treeCell = treeCell;
+	}
+
+
 
 }

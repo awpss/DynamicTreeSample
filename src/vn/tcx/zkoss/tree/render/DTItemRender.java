@@ -23,9 +23,10 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
 	DTEnterKeyEventListener enterEvent;
 	DTDropRowListener dropEvent;
 
-	public DTItemRender(DTMenu menu, DTEnterKeyEventListener enterEvent) {
-		contextMenu = menu;
-		this.enterEvent = enterEvent;
+	public DTItemRender(DTRenderParam param) {
+		contextMenu = param.getContextMenu();
+		this.enterEvent = param.getEnterEvent();
+		this.dropEvent = param.getDropEvent();
 	}
 	public DTItemRender(DTMenu menu, DTEnterKeyEventListener enterEvent, DTDropRowListener dropEvent) {
 		contextMenu = menu;
@@ -63,19 +64,14 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
         item.appendChild(row);
     	if (item.getTree().getAttribute(DTTreeKeys.READ_ONLY.toString()).equals(false)) {
 
-    		if (item.getTree().getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
-//    	        item.setCheckable(true);
-    		}
-
     		if (dropEvent == null) {
-    			dropEvent = new DTDropRowListener(item);
+    			dropEvent = new DTDropRowListener();
     		}
     		dropEvent.setDroppedItem(item);
 	        DTItemUtil.setDragDrop(dropEvent, item, row);
 	        DTItemUtil.setPrepareForFirstShow(item);
     	}
 
-    	item.setOpen(data.isOpen());
 
     }
 

@@ -8,9 +8,13 @@ import org.zkoss.zul.Treeitem;
 
 import vn.tcx.zkoss.tree.model.DTNode;
 
-public class DTDropRowListener implements EventListener<DropEvent> {
+public class DTDropRowListener implements EventListener<DropEvent>, Cloneable {
 
     private Treeitem droppedItem;
+
+    public DTDropRowListener() {
+
+    }
 
     public DTDropRowListener(Treeitem treeItem) {
         this.droppedItem = treeItem;
@@ -43,5 +47,10 @@ public class DTDropRowListener implements EventListener<DropEvent> {
         tree.setModel(tree.getModel());
 
     }
+
+    public Object clone() throws CloneNotSupportedException {
+    	return super.clone();
+    }
+
 
 }

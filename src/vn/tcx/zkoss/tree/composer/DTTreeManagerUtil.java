@@ -74,7 +74,7 @@ public class DTTreeManagerUtil {
 
     	for (DTColumn c : cols) {
     		Treecol col = new Treecol(c.getValue());
-    		col.setWidth(c.getProperty(DTColumnKeys.WIDTH.toString()).toString());
+    		col.setWidth((String) c.getProperty(DTColumnKeys.WIDTH.toString()));
 
     		String expression = (String) c.getProperty(DTColumnKeys.EXPRESSION.toString());
     		if (expression != null && !expression.isEmpty()) {

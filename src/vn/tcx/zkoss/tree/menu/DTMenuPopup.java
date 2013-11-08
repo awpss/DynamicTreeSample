@@ -27,11 +27,13 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
 	 */
 	private static final long serialVersionUID = 843814938783210868L;
 
-	private DTUpdateMenu updateListener;
+	private DTUpdateMenu updateMenu;
+	private DTRemoveMenu removeMenu;
 
-	public DTMenuPopup(DTUpdateMenu updatelistener) {
+	public DTMenuPopup(DTUpdateMenu updateMenu, DTRemoveMenu removeMenu) {
     	super();
-		this.updateListener = updatelistener;
+		this.updateMenu = updateMenu;
+		this.removeMenu = removeMenu;
     }
 
     public void createBaseMenu(Treeitem treeItem, Treerow treeRow, Treecell treeCell) {
@@ -40,10 +42,10 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
     	if (row.getProperty(DTRowKeys.ROW_EDITABLE) != null) {
         	if (row.getProperty(DTRowKeys.ROW_EDITABLE).equals(true)) {
             	Map<DTListenerKeys, EventListener<Event>> updateListenerMap = new HashMap<DTListenerKeys, EventListener<Event>>();
-            	updateListener.setTreeCell(treeCell);
-            	updateListener.setTreeRow(treeRow);
-            	updateListener.setTreeItem(treeItem);
-            	updateListenerMap.put(DTListenerKeys.ON_CLICK, updateListener);
+            	updateMenu.setTreeCell(treeCell);
+            	updateMenu.setTreeRow(treeRow);
+            	updateMenu.setTreeItem(treeItem);
+            	updateListenerMap.put(DTListenerKeys.ON_CLICK, updateMenu);
             	Menuitem update = DTMenuItemUtil.createMenuItem("Cập nhập dữ liệu", updateListenerMap);
             	addMenuItem(update);
         	}
@@ -59,7 +61,14 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
     	modifyListener.put(DTListenerKeys.ON_CLICK, new DTModifyEventListener(treeItem, treeRow, treeCell));
 
     	Map<DTListenerKeys, EventListener<Event>> removeListener = new HashMap<DTListenerKeys, EventListener<Event>>();
-    	removeListener.put(DTListenerKeys.ON_CLICK, new DTRemoveEventListener(treeItem, treeRow, treeCell));
+    	removeMenu.setTreeCell(treeCell);
+    	removeMenu.setTreeRow(treeRow);
+    	removeMenu.setTreeItem(treeItem);
+    	try {
+			removeListener.put(DTListenerKeys.ON_CLICK, (DTRemoveEventListener) removeMenu.clone());
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 
     	Menuitem create = DTMenuItemUtil.createMenuItem("Thêm chỉ tiêu", createListener);
     	Menuitem createChild = DTMenuItemUtil.createMenuItem("Thêm chỉ tiêu con", createChildListener);
@@ -82,7 +91,7 @@ public class DTMenuPopup extends Menupopup implements DTMenu {
 
 
 	public Menupopup createMenu(Treeitem item, Treerow row, Treecell cell) {
-		DTMenuPopup m = new DTMenuPopup(this.updateListener);
+		DTMenuPopup m = new DTMenuPopup(this.updateMenu, this.removeMenu);
 		m.createBaseMenu(item, row, cell);
 		return (Menupopup) m;
 	}
