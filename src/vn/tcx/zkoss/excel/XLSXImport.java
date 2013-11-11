@@ -164,9 +164,9 @@ public class XLSXImport {
 
 		for (Vector<String> v : rows) {
 			DTRow r = new DTRow();
-
-			r.setProperty(DTRowKeys.ROW_ID, finder.getId());
-			r.setProperty(DTRowKeys.ROW_PARENT_ID, finder.getParentId());
+			finder.execute(v);
+			r.setProperty(DTRowKeys.ROW_ID, finder.id);
+			r.setProperty(DTRowKeys.ROW_PARENT_ID, finder.parentId);;
 
 			for (int i = 1; i < v.size(); i++) {
 				r.addCell(new DTCell(v.get(i)));

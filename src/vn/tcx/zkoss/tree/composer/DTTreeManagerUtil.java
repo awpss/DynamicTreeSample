@@ -40,6 +40,7 @@ public class DTTreeManagerUtil {
 			lst = ret.get((String)d.getProperty(DTRowKeys.ROW_PARENT_ID));
 			lst.add(d);
 		}
+
 		return ret;
 	}
 
@@ -99,11 +100,7 @@ public class DTTreeManagerUtil {
     }
 
 	public static void buildItems(Tree tree, List<DTRow> data) {
-//        if (data == null) {
-//        	createTreeModelFromListStringArray(tree, DTTreeFixedData.getFixedData());
-//        } else {
-        	createTreeModelFromListStringArray(tree, data);
-//        }
+    	createTreeModelFromListStringArray(tree, data);
     }
 
 	private static void createTreeColumns(Tree tree, List<DTColumn> cols) {

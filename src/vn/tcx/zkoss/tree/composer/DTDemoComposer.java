@@ -1,6 +1,7 @@
 package vn.tcx.zkoss.tree.composer;
 
 import java.util.List;
+import java.util.Vector;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.DropEvent;
@@ -96,22 +97,17 @@ public class DTDemoComposer extends DTComposer {
 		}
 	}
 
-	public static class DBFinder implements XLSXDBFinder {
+	public static class DBFinder extends XLSXDBFinder {
 
-		String id = "", parentId = "";
 		int i = 0;
 		public DBFinder() {
 
 		}
-
 		@Override
-		public String getParentId() {
-			return parentId;
-		}
+		public void execute(Vector<String> row) {
+			id = "" + i++;
+			parentId = "";
 
-		@Override
-		public String getId() {
-			return id + i;
 		}
 
 	}
