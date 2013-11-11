@@ -23,6 +23,7 @@ public class DTEnterKeyEventListener extends DTUpdateMenu implements Cloneable {
     }
 
     public void onEvent(Event event) throws Exception {
+    	System.out.println(getTreeItem() + " " + getTreeRow());
     	if (((DTNode)getTreeItem().getValue()).getData().getProperty(DTRowKeys.ROW_EDITABLE).equals(true)) {
     		super.onEvent(event);
     	}

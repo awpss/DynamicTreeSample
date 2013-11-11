@@ -49,7 +49,6 @@ public class DTDemoComposer extends DTComposer {
         // Pagination
         tcxTree.setMold("paging");
         tcxTree.setPageSize(20);
-
         cols = dtCols;
         data = dtRows;
 

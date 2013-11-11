@@ -95,7 +95,7 @@ public class XLSXImport {
 	                    if (DateUtil.isCellDateFormatted(cell)) {
 	                    	vec.add(cell.getDateCellValue().toString());
 	                    } else {
-	                    	vec.add(String.valueOf(cell.getNumericCellValue()));
+	                    	vec.add(String.format("%1$,.2f", cell.getNumericCellValue()));
 	                    }
 	                    break;
 	                case Cell.CELL_TYPE_BOOLEAN:
@@ -104,7 +104,7 @@ public class XLSXImport {
 	                case Cell.CELL_TYPE_FORMULA:
 	                	switch(cell.getCachedFormulaResultType()) {
 	                    	case Cell.CELL_TYPE_NUMERIC:
-	                    		vec.add(String.valueOf(cell.getNumericCellValue()));
+	                    		vec.add(String.format("%1$,.2f", cell.getNumericCellValue()));
 	                    		break;
 	                    	case Cell.CELL_TYPE_STRING:
 	                    		vec.add(cell.getRichStringCellValue().toString());

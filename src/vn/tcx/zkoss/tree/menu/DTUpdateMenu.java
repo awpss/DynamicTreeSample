@@ -7,5 +7,8 @@ import vn.tcx.zkoss.tree.listener.DTUpdateEventListener;
 
 public abstract class DTUpdateMenu extends DTUpdateEventListener implements EventListener<Event> {
 
+	public void onEvent(Event event) throws Exception {
+		super.onEvent(event);
+	}
 
 }

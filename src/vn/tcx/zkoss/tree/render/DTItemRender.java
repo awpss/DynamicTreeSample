@@ -68,10 +68,11 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
     			dropEvent = new DTDropRowListener();
     		}
     		dropEvent.setDroppedItem(item);
-	        DTItemUtil.setDragDrop(dropEvent, item, row);
+	        DTItemUtil.setDragDrop((DTDropRowListener) dropEvent.clone(), item, row);
 	        DTItemUtil.setPrepareForFirstShow(item);
     	}
 
+    	item.setOpen(data.isOpen());
 
     }
 

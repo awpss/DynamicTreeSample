@@ -6,6 +6,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Tree;
 import org.zkoss.zul.Treeitem;
 
+import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.model.DTNode;
 
 public class DTDropRowListener implements EventListener<DropEvent>, Cloneable {
@@ -44,7 +45,7 @@ public class DTDropRowListener implements EventListener<DropEvent>, Cloneable {
         	droppedValue.getParent().insert(draggedValue, droppedItem.getIndex());
         }
 
-        tree.setModel(tree.getModel());
+//        tree.setModel(tree.getModel());
 
     }
 

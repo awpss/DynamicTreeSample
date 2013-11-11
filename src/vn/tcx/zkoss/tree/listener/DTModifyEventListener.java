@@ -9,11 +9,11 @@ import org.zkoss.zul.Treerow;
 import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
+import vn.tcx.zkoss.tree.template.DTTemplateUtil;
 
 public class DTModifyEventListener implements EventListener<Event> {
 
     private Treeitem treeItem;
-    @SuppressWarnings("unused")
     private Treerow treeRow;
     @SuppressWarnings("unused")
     private Treecell treeCell;
@@ -30,6 +30,12 @@ public class DTModifyEventListener implements EventListener<Event> {
     	DTRow row = selectedTreeNode.getData();
 		row.setProperty(DTRowKeys.ROW_EDITABLE, true);
 		selectedTreeNode.setData(row);
-		treeItem.getTree().setModel(treeItem.getTree().getModel());
+
+
+		Treecell[] tcell = DTTemplateUtil.createComponents(treeItem, selectedTreeNode, DTTemplateUtil.EDITABLE);
+		treeRow.getChildren().clear();
+		for (Treecell c : tcell) {
+			treeRow.getChildren().add(c);
+		}
     }
 }

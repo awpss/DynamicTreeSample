@@ -17,6 +17,7 @@ import vn.tcx.zkoss.tree.constant.DTRowKeys;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTNode;
 import vn.tcx.zkoss.tree.model.DTRow;
+import vn.tcx.zkoss.tree.template.DTTemplateUtil;
 
 public class DTUpdateEventListener implements EventListener<Event> {
 
@@ -61,6 +62,7 @@ public class DTUpdateEventListener implements EventListener<Event> {
     }
 
     public void onEvent(Event event) throws Exception {
+    	System.out.println(treeItem + " " + treeRow);
     	DTNode selectedTreeNode = treeItem.getValue();
     	DTRow row = selectedTreeNode.getData();
     	List<DTCell> cells = row.getCells();
@@ -74,7 +76,7 @@ public class DTUpdateEventListener implements EventListener<Event> {
      				cells.get(i).setValue((String)((Combobox) cc).getSelectedItem().getValue());
      				cells.get(i).setText((String)((Combobox) cc).getSelectedItem().getLabel());
     			} else if (cc instanceof Textbox) {
-        			cells.get(i).setValue(((Textbox)cc).getValue());
+    				cells.get(i).setValue(((Textbox)cc).getValue());
         			cells.get(i).setText(((Textbox)cc).getValue());
     			}
     			i++;
@@ -84,8 +86,12 @@ public class DTUpdateEventListener implements EventListener<Event> {
     	row.setCells(cells);
 		row.setProperty(DTRowKeys.ROW_EDITABLE, false);
 		selectedTreeNode.setData(row);
-		treeItem.getTree().setModel(treeItem.getTree().getModel());
 
+		Treecell[] tcell = DTTemplateUtil.createComponents(treeItem, selectedTreeNode, DTTemplateUtil.NONEDITABLE);
+		treeRow.getChildren().clear();
+		for (Treecell c : tcell) {
+			treeRow.getChildren().add(c);
+		}
     }
 
 }
