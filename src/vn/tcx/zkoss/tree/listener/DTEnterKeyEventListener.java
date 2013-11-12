@@ -1,6 +1,6 @@
 package vn.tcx.zkoss.tree.listener;
 
-import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.KeyEvent;
 import org.zkoss.zul.Treecell;
 import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Treerow;
@@ -22,8 +22,8 @@ public class DTEnterKeyEventListener extends DTUpdateMenu implements Cloneable {
         setTreeRow(treeRow);
     }
 
-    public void onEvent(Event event) throws Exception {
-    	System.out.println(getTreeItem() + " " + getTreeRow());
+    public void onEvent(KeyEvent event) throws Exception {
+
     	if (((DTNode)getTreeItem().getValue()).getData().getProperty(DTRowKeys.ROW_EDITABLE).equals(true)) {
     		super.onEvent(event);
     	}

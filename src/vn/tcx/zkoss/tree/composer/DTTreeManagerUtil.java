@@ -116,11 +116,15 @@ public class DTTreeManagerUtil {
 
 		Treecols treeCols = DTTreeManagerUtil.getTreecolsFromDTColumn(cols);
 		if (tree.getAttribute(DTTreeKeys.HAS_NO_COLUMN.toString()).equals(true)) {
-			treeCols.getChildren().add(0, new Treecol("TT") {{ setWidth("30px"); }});
+			Treecol tt = new Treecol("TT");
+			tt.setWidth("30px");
+			treeCols.getChildren().add(0, tt);
 		}
 
 		if (tree.getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
-			treeCols.getChildren().add(0, new Treecol() {{ setWidth("100px"); }});
+			Treecol nil = new Treecol("");
+			nil.setWidth("100px");
+			treeCols.getChildren().add(0, nil);
 		}
 		tree.appendChild(treeCols);
 	}

@@ -58,6 +58,4 @@ public class DTRemoveEventListener implements EventListener<Event>, Cloneable {
 		this.treeCell = treeCell;
 	}
 
-
-
 }

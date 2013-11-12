@@ -5,6 +5,10 @@ import org.zkoss.zul.DefaultTreeNode;
 
 public class DTTreeModel extends DefaultTreeModel<DTRow> {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	DTNode root;
 
 	public DTTreeModel(DTNode root) {
@@ -13,7 +17,7 @@ public class DTTreeModel extends DefaultTreeModel<DTRow> {
 	}
 
 
-    private DefaultTreeNode<DTRow> dfSearchParent(DefaultTreeNode<DTRow> node, DefaultTreeNode<DTRow> target) {
+    public DefaultTreeNode<DTRow> dfSearchParent(DefaultTreeNode<DTRow> node, DefaultTreeNode<DTRow> target) {
     	if (node.getChildren() != null && node.getChildren().contains(target)) {
     		return node;
     	} else {

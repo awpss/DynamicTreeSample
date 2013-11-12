@@ -31,7 +31,6 @@ public class DTModifyEventListener implements EventListener<Event> {
 		row.setProperty(DTRowKeys.ROW_EDITABLE, true);
 		selectedTreeNode.setData(row);
 
-
 		Treecell[] tcell = DTTemplateUtil.createComponents(treeItem, selectedTreeNode, DTTemplateUtil.EDITABLE);
 		treeRow.getChildren().clear();
 		for (Treecell c : tcell) {

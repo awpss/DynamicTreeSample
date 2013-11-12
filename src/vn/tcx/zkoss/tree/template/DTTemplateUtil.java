@@ -67,7 +67,8 @@ public class DTTemplateUtil {
                     cell.appendChild(new Label(c.getText()));
             	} else {
             		if (c.getProperty(DTCellKeys.INPUT_TYPE) != null) {
-            			Class<Component> cls = (Class<Component>) c.getProperty(DTCellKeys.INPUT_TYPE);
+            			@SuppressWarnings("unchecked")
+						Class<Component> cls = (Class<Component>) c.getProperty(DTCellKeys.INPUT_TYPE);
             			try {
 
             				final Component t = cls.newInstance();
@@ -79,7 +80,8 @@ public class DTTemplateUtil {
     							((Intbox) t).setValue(Integer.parseInt(c.getValue()));
     						} else if (t instanceof Combobox) {
 
-    							ListModel<DTComboboxModel> model = new ListModelList<DTComboboxModel>((List<DTComboboxModel>) c.getProperty(DTCellKeys.COMPONENT_DATA));
+    							@SuppressWarnings("unchecked")
+								ListModel<DTComboboxModel> model = new ListModelList<DTComboboxModel>((List<DTComboboxModel>) c.getProperty(DTCellKeys.COMPONENT_DATA));
 
     							((Combobox) t).setItemRenderer(new ComboitemRenderer<DTComboboxModel>() {
     								public void render(Comboitem item, DTComboboxModel data,

@@ -62,11 +62,9 @@ public class DTUpdateEventListener implements EventListener<Event> {
     }
 
     public void onEvent(Event event) throws Exception {
-    	System.out.println(treeItem + " " + treeRow);
     	DTNode selectedTreeNode = treeItem.getValue();
     	DTRow row = selectedTreeNode.getData();
     	List<DTCell> cells = row.getCells();
-
     	int i = 0;
     	for (Component cp : treeRow.getChildren()) {
     		for (Component cc : cp.getChildren()) {
@@ -82,16 +80,15 @@ public class DTUpdateEventListener implements EventListener<Event> {
     			i++;
     		}
     	}
-
     	row.setCells(cells);
 		row.setProperty(DTRowKeys.ROW_EDITABLE, false);
 		selectedTreeNode.setData(row);
-
 		Treecell[] tcell = DTTemplateUtil.createComponents(treeItem, selectedTreeNode, DTTemplateUtil.NONEDITABLE);
 		treeRow.getChildren().clear();
 		for (Treecell c : tcell) {
 			treeRow.getChildren().add(c);
 		}
+		event.stopPropagation();
     }
 
 }
