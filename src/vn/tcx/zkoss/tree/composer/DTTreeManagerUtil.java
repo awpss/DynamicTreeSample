@@ -2,6 +2,7 @@ package vn.tcx.zkoss.tree.composer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +96,20 @@ public class DTTreeManagerUtil {
         if (cols == null) {
         	createTreeColumns(tree, DTTreeFixedData.getColumns());
         } else {
+
+        	Collections.sort(cols, new Comparator<DTColumn>() {
+
+				@Override
+				public int compare(DTColumn o1, DTColumn o2) {
+					if (o1.getOrder() < o2.getOrder()) {
+						return 1;
+					} else {
+						return -1;
+					}
+				}
+
+        	});
+
         	createTreeColumns(tree, cols);
         }
     }

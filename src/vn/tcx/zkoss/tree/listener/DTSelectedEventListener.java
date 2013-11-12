@@ -13,24 +13,34 @@ public class DTSelectedEventListener implements EventListener<SelectEvent<Tree, 
 	public void onEvent(SelectEvent<Tree, Treeitem> event)
 			throws Exception {
 
+		System.out.println(event.getSelectedObjects());
+
 		Tree selectedTree = (Tree) event.getTarget();
+
 		for (Treeitem item : selectedTree.getSelectedItems()) {
-			selectedChilds(item);
+			selectedChilds(item, false);
 		}
 
 	}
 
-	public void selectedChilds(Treeitem item) {
+	public void selectedChilds(Treeitem item, boolean check) {
 		item.setSelected(true);
 
 		for (Component c : item.getChildren()) {
 			if (c instanceof Treechildren) {
 				for (Component t : c.getChildren()) {
-					selectedChilds((Treeitem) t);
+					selectedChilds((Treeitem) t, true);
 				}
 			}
 		}
+
+		if (!check) {
+			Treeitem it = item;
+
+			while((it = it.getParentItem()) != null) {
+				it.setSelected(true);
+			}
+
+		}
 	}
-
-
 }

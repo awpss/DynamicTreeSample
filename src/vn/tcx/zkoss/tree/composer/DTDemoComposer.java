@@ -53,7 +53,6 @@ public class DTDemoComposer extends DTComposer {
         cols = dtCols;
         data = dtRows;
 
-
         // Put data to grid
     	DTTreeManagerUtil.buildColumns(tcxTree, cols);
     	DTTreeManagerUtil.buildItems(tcxTree, data);

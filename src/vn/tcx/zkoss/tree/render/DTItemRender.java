@@ -64,6 +64,8 @@ public class DTItemRender implements TreeitemRenderer<DTNode> {
         item.appendChild(row);
     	if (item.getTree().getAttribute(DTTreeKeys.READ_ONLY.toString()).equals(false)) {
 
+    		item.setCheckable(true);
+
     		if (dropEvent == null) {
     			dropEvent = new DTDropRowListener();
     		}

@@ -79,7 +79,6 @@ public class DTTemplateUtil {
     						} else if (t instanceof Intbox) {
     							((Intbox) t).setValue(Integer.parseInt(c.getValue()));
     						} else if (t instanceof Combobox) {
-
     							@SuppressWarnings("unchecked")
 								ListModel<DTComboboxModel> model = new ListModelList<DTComboboxModel>((List<DTComboboxModel>) c.getProperty(DTCellKeys.COMPONENT_DATA));
 
