@@ -7,10 +7,13 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.DropEvent;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Messagebox;
 
 import vn.tcx.zkoss.excel.XLSXDBFinder;
 import vn.tcx.zkoss.excel.XLSXImport;
 import vn.tcx.zkoss.excel.XLSXTemplateFactory;
+import vn.tcx.zkoss.tree.constant.DTColumnKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
 import vn.tcx.zkoss.tree.listener.DTDropRowListener;
 import vn.tcx.zkoss.tree.listener.DTEnterKeyEventListener;
@@ -34,6 +37,8 @@ public class DTDemoComposer extends DTComposer {
 		String path = "/Users/AnhMV/Downloads/CTKTXH_Dulieumau.xlsx";
 		XLSXImport myImport = new XLSXImport(path, XLSXTemplateFactory.SAMPLE);
 		dtCols = myImport.getDTColumns();
+		dtCols.add(new DTColumn("Tổng 5 năm") {{ setProperty(DTColumnKeys.OPTION.toString(), true); setProperty(DTColumnKeys.WIDTH.toString(), "110px"); setProperty(DTColumnKeys.EXPRESSION.toString(), "#3 + #4");}});
+		dtCols.add(new DTColumn("") {{ setProperty(DTColumnKeys.OPTION.toString(), true); setProperty(DTColumnKeys.WIDTH.toString(), "30px"); setProperty(DTColumnKeys.CHECKER.toString(), true);}});
 		dtRows = myImport.getDTRows(new DBFinder());
 	}
 
@@ -108,6 +113,9 @@ public class DTDemoComposer extends DTComposer {
 			parentId = "";
 
 		}
+	}
 
+	public void onClick$btnGetSelected() {
+		Messagebox.show(((List<DTRow>)tcxTree.getAttribute(DTTreeKeys.SELECTED_DATA.toString())).toString());
 	}
 }

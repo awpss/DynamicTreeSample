@@ -78,6 +78,8 @@ public class DTTreeManagerUtil {
     		Treecol col = new Treecol(c.getValue());
     		col.setWidth((String) c.getProperty(DTColumnKeys.WIDTH.toString()));
 
+    		col.setAttribute(DTColumnKeys.OPTION.toString(), c.getProperty(DTColumnKeys.OPTION.toString()));
+    		col.setAttribute(DTColumnKeys.CHECKER.toString(), c.getProperty(DTColumnKeys.CHECKER.toString()));
     		String expression = (String) c.getProperty(DTColumnKeys.EXPRESSION.toString());
     		if (expression != null && !expression.isEmpty()) {
     			col.setAttribute(DTColumnKeys.EXPRESSION.toString(), expression);
@@ -130,17 +132,6 @@ public class DTTreeManagerUtil {
 		}
 
 		Treecols treeCols = DTTreeManagerUtil.getTreecolsFromDTColumn(cols);
-		if (tree.getAttribute(DTTreeKeys.HAS_NO_COLUMN.toString()).equals(true)) {
-			Treecol tt = new Treecol("TT");
-			tt.setWidth("30px");
-			treeCols.getChildren().add(0, tt);
-		}
-
-		if (tree.getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
-			Treecol nil = new Treecol("");
-			nil.setWidth("100px");
-			treeCols.getChildren().add(0, nil);
-		}
 		tree.appendChild(treeCols);
 	}
 
@@ -152,8 +143,8 @@ public class DTTreeManagerUtil {
     public static void setReadonly(Tree tree, List<DTColumn> cols, List<DTRow> data, boolean bool) {
     	recreateTree(tree, cols, data);
 		tree.setAttribute(DTTreeKeys.READ_ONLY.toString(), !bool);
-		tree.setCheckmark(bool);
-		tree.setMultiple(bool);
+//		tree.setCheckmark(bool);
+//		tree.setMultiple(bool);
     	tree.setModel(tree.getModel());
     }
 

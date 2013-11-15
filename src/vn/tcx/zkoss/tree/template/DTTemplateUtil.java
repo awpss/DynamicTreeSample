@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.ComboitemRenderer;
@@ -19,6 +21,7 @@ import org.zkoss.zul.Treeitem;
 import vn.tcx.zkoss.tree.calc.DTPoland;
 import vn.tcx.zkoss.tree.constant.DTCellKeys;
 import vn.tcx.zkoss.tree.constant.DTTreeKeys;
+import vn.tcx.zkoss.tree.listener.DTCheckEventListener;
 import vn.tcx.zkoss.tree.model.DTCell;
 import vn.tcx.zkoss.tree.model.DTComboboxModel;
 import vn.tcx.zkoss.tree.model.DTNode;
@@ -55,17 +58,37 @@ public class DTTemplateUtil {
 
     public static Treecell[] createComponents(Treeitem item, DTNode data, int mode) {
         Treecell[] ret = new Treecell[DTItemUtil.countColumns(item.getTree())];
+
         int i = 0;
-        for (final DTCell c : data.getData().getCells()) {
+        int k = 0;
+        for (i = 0; i < ret.length; i++) {
     		Treecell cell = new Treecell();
-        	if (DTItemUtil.isCalculationColumn(item.getTree(), i)) {
-        		cell.appendChild(new Label(calculation(DTItemUtil.getCalculationExpression(item.getTree(), i), data.getData().getCells())));
+        	if (DTItemUtil.isOptionColumn(item.getTree(), i)) {
+
+        		if (DTItemUtil.isCalculationColumn(item.getTree(), i)) {
+            		cell.appendChild(new Label(calculation(DTItemUtil.getCalculationExpression(item.getTree(), i), data.getData().getCells())));
+        		} else if (DTItemUtil.isCheckColumn(item.getTree(), i)) {
+
+        			Checkbox cur = DTItemUtil.getCheckbox(item);
+        			Checkbox c = new Checkbox();
+
+        			if (cur != null) {
+        				c.setChecked(cur.isChecked());
+        			}
+        			c.addEventListener(Events.ON_CHECK, new DTCheckEventListener(item));
+        			cell.appendChild(c);
+
+        		}
         	} else if (i == 0 && item.getTree().getAttribute(DTTreeKeys.CHECKABLE.toString()).equals(true)) {
     			cell.appendChild(new Label(""));
     		} else {
-            	if (mode == NONEDITABLE) {
+
+    			final DTCell c = data.getData().getCells().get(k++);
+
+    			if (mode == NONEDITABLE) {
                     cell.appendChild(new Label(c.getText()));
             	} else {
+
             		if (c.getProperty(DTCellKeys.INPUT_TYPE) != null) {
             			@SuppressWarnings("unchecked")
 						Class<Component> cls = (Class<Component>) c.getProperty(DTCellKeys.INPUT_TYPE);
@@ -96,6 +119,10 @@ public class DTTemplateUtil {
 								});
 
     							((Combobox) t).setModel(model);
+    						} else if (t instanceof Checkbox) {
+    							((Checkbox) t).setLabel(c.getText());
+    							((Checkbox) t).setChecked(Boolean.valueOf(c.getValue()));
+//    							((Checkbox) t).addEventListener(Events.ON_CHECK, listener)
     						} else {
     							((Textbox) t).setValue(c.getValue());
     						}
@@ -113,7 +140,7 @@ public class DTTemplateUtil {
             		}
             	}
         	}
-            ret[i++] = cell;
+            ret[i] = cell;
         }
 
         return ret;
